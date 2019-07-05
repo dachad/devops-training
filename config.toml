@@ -1,0 +1,11 @@
+baseURL = "http://devops-training.github.io/"
+languageCode = "es"
+title = "Devops training BCN"
+
+theme = "reveal-hugo"
+publishDir = "docs/"
+
+[outputFormats.Reveal]
+baseName = "index"
+mediaType = "text/html"
+isHTML = true
