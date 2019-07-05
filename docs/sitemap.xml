@@ -3,7 +3,24 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://dachad.github.io/devops-training/home/home2/section1/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/home/home3/aaa/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/home/home3/zsection0/</loc>
+  </url>
+  
+  <url>
     <loc>http://dachad.github.io/devops-training/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/home/</loc>
     <priority>0</priority>
   </url>
   

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Homes on Devops training BCN</title>
+    <link>http://dachad.github.io/devops-training/home/</link>
+    <description>Recent content in Homes on Devops training BCN</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>es</language>
+    
+	<atom:link href="http://dachad.github.io/devops-training/home/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title></title>
+      <link>http://dachad.github.io/devops-training/home/home2/section1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dachad.github.io/devops-training/home/home2/section1/</guid>
+      <description>Hello world 2  </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dachad.github.io/devops-training/home/home3/aaa/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dachad.github.io/devops-training/home/home3/aaa/</guid>
+      <description>Hello world 3  </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://dachad.github.io/devops-training/home/home3/zsection0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://dachad.github.io/devops-training/home/home3/zsection0/</guid>
+      <description>Agenda         Welcome   Infra, cloud and applications   IaC history   Comparing approaches   Closure    Who are you? Daniel Caballero Rodríguez
+ Sr SRE Engineer @ Fastly Part time (Devops) lecturer @ La Salle University Previously working @ Schibsted, NTT, Oracle&amp;hellip; Eventual OSS contributions, mostly fixes  And tcpgoon    </description>
+    </item>
+    
+  </channel>
+</rss>
