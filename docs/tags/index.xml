@@ -2,12 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Devops training BCN</title>
-    <link>http://devops-training.github.io/tags/</link>
+    <link>http://dachad.github.io/devops-training/tags/</link>
     <description>Recent content in Tags on Devops training BCN</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>es</language>
     
-	<atom:link href="http://devops-training.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://dachad.github.io/devops-training/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>

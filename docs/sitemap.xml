@@ -3,16 +3,16 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://devops-training.github.io/categories/</loc>
+    <loc>http://dachad.github.io/devops-training/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://devops-training.github.io/</loc>
+    <loc>http://dachad.github.io/devops-training/</loc>
   </url>
   
   <url>
-    <loc>http://devops-training.github.io/tags/</loc>
+    <loc>http://dachad.github.io/devops-training/tags/</loc>
     <priority>0</priority>
   </url>
   
