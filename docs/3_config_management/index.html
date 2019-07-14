@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>Infrastructure as Code or Infrastructure as Configuration?</title>
+
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/devops-training/reveal-js/css/reveal.css"><link rel="stylesheet" href="/devops-training/custom.css" id="theme"><link rel="stylesheet" href="/devops-training/highlight-js/default.min.css">
+    
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+  
+
+
+
+<section data-noprocess data-shortcode-slide
+    data-background="#4d163b"
+    class="title"
+    data-template="title"
+      data-background-image="images/Title.png">
+  
+
+<h1 id="gestión-de-la-configuración-irrupción-de-la-automatización">Gestión de la configuración, irrupción de la automatización</h1>
+
+<table>
+<thead>
+<tr>
+<th></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Porque automatizar la gestión de configuración?</td>
+</tr>
+
+<tr>
+<td>Herramientas disponibles</td>
+</tr>
+</tbody>
+</table>
+</section>
+
+  
+<section data-shortcode-section>
+<section data-noprocess data-shortcode-slide
+    data-background="#f7cbbf"
+    class="subtitle"
+    data-template="subtitle"></p>
+
+<h2 id="gestión-de-la-configuración-de-servicios-e-infraestructura">Gestión de la configuración de servicios e Infraestructura</h2>
+
+</section><section>
+
+<h2 id="objetivos-de-la-gestión-automatizada">Objetivos de la gestión automatizada</h2>
+
+<ul>
+<li>Un nuevo servidor ha de poder ser <strong>provisionado bajo demanda</strong>, en pocos minutos o segundos</li>
+<li>Un cambio de provisión o configuración se debe aplicar a los servidores <strong>sin interacción humana</strong></li>
+<li>Cada cambio se <strong>aplica a todos</strong> los servidores afectados, y también en los nuevos servidores creados</li>
+<li>El proceso de provisión y aplicación de cambios debe ser <strong>repetible, consistente, auto-documentado y transparente</strong>
+
+<ul>
+<li>Idealmente <em>idempotente</em></li>
+</ul></li>
+<li>Debe ser sencillo y seguro hacer cambios al propio proceso</li>
+<li><strong>Tests automáticos</strong> deben ejecutarse para cualquier nuevo cambio</li>
+<li>Los cambios de configuración o de proceso se deben <strong>versionar y aplicar a diferentes entornos</strong>
+
+<ul>
+<li>¿PR como oportunidad para discusiones y validaciones del resto del equipo?</li>
+</ul></li>
+</ul>
+</section>
+</section><section data-shortcode-section>
+<p><section data-noprocess data-shortcode-slide
+    data-background="#f7cbbf"
+    class="subtitle"
+    data-template="subtitle"></p>
+
+<h2 id="imperativo-vs-declarativo">Imperativo vs Declarativo</h2>
+
+<p><img src="../images/imperative-vs-declarative-xkcd.png" style="width:120%;"></p>
+
+<!-- ## Arquitectura Agent vs Agent-less -->
+
+<!-- https://www.slideshare.net/MartinEtmajer/automated-deployments-with-ansible -->
+
+</section><section>
+
+<h2 id="herramientas-para-gestión-de-configuración-en-servidores">Herramientas para gestión de configuración en servidores</h2>
+
+<table>
+<thead>
+<tr>
+<th>Herramienta</th>
+<th>Método</th>
+<th>Aproximación</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>CFEngine</td>
+<td>Pull</td>
+<td>Declarativo</td>
+</tr>
+
+<tr>
+<td>Chef</td>
+<td>Pull</td>
+<td>Imperativo</td>
+</tr>
+
+<tr>
+<td>Puppet</td>
+<td>Pull</td>
+<td>Declarativo</td>
+</tr>
+
+<tr>
+<td>SaltStack</td>
+<td>Push</td>
+<td>Declarativo e Imperativo</td>
+</tr>
+
+<tr>
+<td>Ansible</td>
+<td>Push</td>
+<td>Declarativo e Imperativo</td>
+</tr>
+</tbody>
+</table>
+
+</section><section>
+
+<h2 id="popularidad">Popularidad</h2>
+
+<p><img src="../images/googletrends.png" style="width:80%;"></p>
+
+</section><section>
+
+<h2 id="ejemplo-completo-de-infraestructura-inmutable">Ejemplo completo de Infraestructura Inmutable</h2>
+
+<blockquote>
+<p>Objetivo: queremos desplegar contenedores en un cluster dinámico sobre un servicio de Cloud público</p>
+</blockquote>
+
+<!-- Cuidado; la separación entre infra, sistemas, y aplicaciones, aunque entiendo que es lógica, va en contra de la filosofía del curso -->
+
+<ul>
+<li>Infraestructura:
+
+<ul>
+<li>AWS Cloudformation para definir y generar la infraestructura en el Cloud</li>
+</ul></li>
+<li>Sistemas:
+
+<ul>
+<li>Un proceso de Pipeline que crea mediante Packer las AMIs del Cluster</li>
+<li>AWS ASG para adaptarnos a cambios de carga</li>
+<li>No utilizaremos cambios de configuración pues nos basamos en infraestructura inmutable</li>
+</ul></li>
+<li>Aplicaciones:
+
+<ul>
+<li>La aplicaciones a desplegar vendrán creadas como contenedores Docker por la Pipeline de aplicación</li>
+<li>Para correr los contenedores tendremos implementados un sistema de orquestración de cluster como Kubernetes</li>
+<li>Finalmente, cualquier cambio en la aplicación, siguiendo el principio de infraestructura inmutable, genera un nuevo contenedor a desplegar</li>
+</ul></li>
+</ul>
+
+</section><section>
+
+<h2 id="ansible">Ansible</h2>
+
+</section><section>
+
+<h2 id="ejemplo-con-ansible-1">Ejemplo con Ansible (1)</h2>
+
+<pre><code>|-- your_folder
+|   |-- site.yml                # Master Playbook
+|   |-- roles
+|   |   |-- router
+|   |   |   |-- vars
+|   |   |   |   |-- main.yml
+|   |   |   |-- templates
+|   |   |   |   |-- router.j2
+|   |   |   |-- tasks
+|   |   |   |   |-- main.yml
+</code></pre>
+
+<pre><code class="language-yaml">$ cat site.yml
+---
+- name: Generate router configuration files
+  hosts: localhost
+
+  roles:
+    - router
+</code></pre>
+
+</section><section>
+
+<h2 id="ejemplo-con-ansible-2">Ejemplo con Ansible (2)</h2>
+
+<pre><code class="language-yaml">$ cat roles/router/tasks/main.yml
+---
+- name: Generate configuration files
+  template: src=router.j2 dest=/home/gituser/ANSIBLE/CFGS/{{item.hostname}}.txt
+  with_items: &quot;{{ test_routers }}&quot;
+</code></pre>
+
+<pre><code class="language-yaml">$ cat roles/router/vars/main.yml
+---
+test_routers:
+   - { hostname: twb-sf-rtr1 }
+   - { hostname: twb-sf-rtr2 }
+   - { hostname: twb-la-rtr1 }
+   - { hostname: twb-la-rtr2 }
+   - { hostname: twb-den-rtr1 }
+</code></pre>
+
+<pre><code class="language-bash">$ cat roles/router/templates/router.js
+no service pad
+service tcp-keepalives-in
+service tcp-keepalives-out
+service timestamps debug datetime msec localtime show-timezone
+service timestamps log datetime msec localtime show-timezone
+service password-encryption
+!
+hostname {{item.hostname}}
+!
+</code></pre>
+
+</section><section>
+
+<h2 id="ejemplo-con-ansible-3">Ejemplo con Ansible (3)</h2>
+
+<pre><code class="language-ansible">$ ansible-playbook site.yml
+
+PLAY [Generate router configuration files] ************************************
+
+GATHERING FACTS ***************************************************************
+ok: [localhost]
+
+TASK: [router | Generate configuration files] *********************************
+changed: [localhost] =&gt; (item={'hostname': 'twb-sf-rtr1'})
+changed: [localhost] =&gt; (item={'hostname': 'twb-sf-rtr2'})
+
+PLAY RECAP ********************************************************************
+localhost                  : ok=2    changed=1    unreachable=0    failed=0 
+</code></pre>
+
+<pre><code class="language-bash">$ cat /home/gituser/ANSIBLE/CFGS/twb-sf-rtr1.txt
+no service pad
+service tcp-keepalives-in
+service tcp-keepalives-out
+service timestamps debug datetime msec localtime show-timezone
+service timestamps log datetime msec localtime show-timezone
+service password-encryption
+!
+hostname twb-sf-rtr1
+</code></pre>
+
+</section><section>
+
+<h2 id="ejemplo-con-ansible-4">Ejemplo con Ansible (4)</h2>
+
+<ul>
+<li>El ejemplo anterior es un uso particular de Ansible dado que el host que interpreta las recetas
+(y potencialmente puede propagar cambios a terceros) es el mismo contra el que se aplica la lógica, &ldquo;localhost&rdquo;
+
+<ul>
+<li>Habitualmente en el campo <strong>hosts</strong> de cada parte del <strong>playbook</strong> definimos los hosts donde aplicar los roles (en lugar de usar localhost)</li>
+</ul></li>
+
+<li><p>El grupo referenciado se define en el fichero <strong>hosts</strong> de Ansible</p>
+
+<pre><code>[lb]
+foo.example.com     ansible_connection=ssh    ansible_user=username
+bar.example.com     ansible_connection=ssh    ansible_user=username
+
+[www]
+www[01:50].example.com:5999
+</code></pre></li>
+</ul>
+
+<p><img src="https://www.packtpub.com/sites/default/files/Article-Images/B03800_01_02.png" style="width:50%;"></p>
+
+</section><section>
+
+<h2 id="infraestructura-inmutable-con-herramienta-de-gestión-de-despliegues">Infraestructura Inmutable con herramienta de gestión de despliegues</h2>
+
+</section><section>
+
+<h2 id="packer-y-puppet-1">Packer y Puppet  (1)</h2>
+
+<p>Packer permite crear imágenes idénticas para múltiples plataformas desde un único fichero de configuración</p>
+
+<p>El template (Json):</p>
+
+<pre><code class="language-json">{
+  &quot;variables&quot;: {
+    &quot;aws_access_key&quot;: &quot;&quot;,
+    &quot;aws_secret_key&quot;: &quot;&quot;
+  },
+  &quot;builders&quot;: [{
+    &quot;type&quot;: &quot;amazon-ebs&quot;,
+    &quot;access_key&quot;: &quot;{{user `aws_access_key`}}&quot;,
+    &quot;secret_key&quot;: &quot;{{user `aws_secret_key`}}&quot;,
+    &quot;region&quot;: &quot;us-east-1&quot;,
+    &quot;source_ami&quot;: &quot;ami-fce3c696&quot;,
+    &quot;instance_type&quot;: &quot;t2.micro&quot;,
+    &quot;ssh_username&quot;: &quot;ubuntu&quot;,
+    &quot;ami_name&quot;: &quot;packer-example {{timestamp}}&quot;
+  }]
+}
+</code></pre>
+
+</section><section>
+
+<h2 id="packer-y-puppet-2">Packer y Puppet  (2)</h2>
+
+<pre><code class="language-bash">$ packer build -var 'aws_access_key=YOUR ACCESS KEY' \
+               -var 'aws_secret_key=YOUR SECRET KEY' \
+               example.json
+               
+==&gt; amazon-ebs: amazon-ebs output will be in this color.
+==&gt; amazon-ebs: Creating temporary keypair for this instance...
+==&gt; amazon-ebs: Creating temporary security group for this instance...
+==&gt; amazon-ebs: Authorizing SSH access on the temporary security group...
+==&gt; amazon-ebs: Launching a source AWS instance...
+==&gt; amazon-ebs: Waiting for instance to become ready...
+==&gt; amazon-ebs: Connecting to the instance via SSH...
+==&gt; amazon-ebs: Stopping the source instance...
+==&gt; amazon-ebs: Waiting for the instance to stop...
+==&gt; amazon-ebs: Creating the AMI: packer-example 1371856345
+==&gt; amazon-ebs: AMI: ami-19601070
+==&gt; amazon-ebs: Waiting for AMI to become ready...
+==&gt; amazon-ebs: Terminating the source AWS instance...
+==&gt; amazon-ebs: Deleting temporary security group...
+==&gt; amazon-ebs: Deleting temporary keypair...
+==&gt; amazon-ebs: Build finished.
+==&gt; Builds finished. The artifacts of successful builds are:
+--&gt; amazon-ebs: AMIs were created:
+
+us-east-1: ami-19601070
+</code></pre>
+
+</section><section>
+
+<h2 id="packer-y-puppet-3">Packer y Puppet  (3)</h2>
+
+<pre><code class="language-json">{
+    &quot;variables&quot;: ...,
+    &quot;builders&quot;: [{
+        &quot;type&quot;: &quot;amazon-ebs&quot;,
+        &quot;access_key&quot;: &quot;{{ user `aws_access_key`}}&quot;,
+        ...,
+        &quot;region&quot;: &quot;eu-west-1&quot;,
+        &quot;source_ami&quot;: &quot;ami-abcdef12&quot;,
+        &quot;ami_name&quot;: &quot;the_name_of_the_new_ami&quot;,
+        &quot;iam_instance_profile&quot;: &quot;puppet-provisioner&quot;,   #secret provisioning
+    }],
+    &quot;provisioners&quot;: [
+        {
+            &quot;type&quot;: &quot;puppet-masterless&quot;,
+            &quot;hiera_config_path&quot;: &quot;../puppet/hiera.yaml&quot;,
+            &quot;manifest_file&quot;: &quot;../puppet/manifest/default.pp&quot;,
+            &quot;module_paths&quot;: [ &quot;../puppet/modules&quot; ]
+        },
+        ...,
+        {
+            &quot;type&quot;: &quot;shell&quot;,
+            &quot;script&quot;: &quot;../common/install-hiera-key.sh&quot;
+        },
+    ]
+}       
+</code></pre>
+
+</section>
+</section>
+
+</div>
+      
+
+    </div>
+<script type="text/javascript" src=/devops-training/reveal-hugo/object-assign.js></script>
+
+<a href="/devops-training/reveal-js/css/print/" id="print-location" style="display: none;"></a>
+<script type="text/javascript">
+  var printLocationElement = document.getElementById('print-location');
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = printLocationElement.href + (window.location.search.match(/print-pdf/gi) ? 'pdf.css' : 'paper.css');
+  document.getElementsByTagName('head')[0].appendChild(link);
+</script>
+
+<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom.css","slide_number":true}</script>
+<script type="application/json" id="reveal-hugo-page-params">{"templates":{"subtitle":{"background":"#f7cbbf","class":"subtitle"},"title":{"background":"#4d163b","class":"title"}}}</script>
+
+<script src="/devops-training/reveal-js/lib/js/head.min.js"></script>
+<script src="/devops-training/reveal-js/js/reveal.js"></script>
+
+<script type="text/javascript">
+  
+  
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+  
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
+  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams));
+  Reveal.initialize(options);
+</script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/lib/js/classList.js"></script>
+
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/markdown/marked.js"></script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/markdown/markdown.js"></script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/highlight/highlight.js"></script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/zoom-js/zoom.js"></script>
+
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/notes/notes.js"></script>
+
+
+
+<script type="text/javascript">
+if (hljs)
+  hljs.initHighlightingOnLoad();
+</script>
+    
+    
+  </body>
+</html>

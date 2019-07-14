@@ -3,15 +3,103 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://dachad.github.io/devops-training/home/home2/section1/</loc>
+    <loc>http://dachad.github.io/devops-training/1_what_is_devops/1_ops_vs_dev/</loc>
   </url>
   
   <url>
-    <loc>http://dachad.github.io/devops-training/home/home3/aaa/</loc>
+    <loc>http://dachad.github.io/devops-training/1_what_is_devops/2_why_is_convenient/</loc>
   </url>
   
   <url>
-    <loc>http://dachad.github.io/devops-training/home/home3/zsection0/</loc>
+    <loc>http://dachad.github.io/devops-training/1_what_is_devops/3_devops_vs_sre/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/3_config_management/1_why_config_management/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/3_config_management/2_automation_cfg_mgmt_tools/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/5_amazon_irruption/1_breaking_silos/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/5_amazon_irruption/2_storage/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/5_amazon_irruption/3_dynamic_infra/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/5_amazon_irruption/4_iac/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/9_devops_transition/1_que_esperar/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/9_devops_transition/2_organizacion/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/9_devops_transition/3_cultura/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/9_devops_transition/4_tech/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/9_devops_transition/5_toolkit/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/a_lab_ansible/0_intro/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/a_lab_ansible/1_ansible_basics/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/a_lab_ansible/2_ansible_hands_on/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/a_lab_ansible/3_ansible_extended/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/b_lab_ec2_pipeline/0_intro/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/b_lab_ec2_pipeline/1_setup/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/b_lab_ec2_pipeline/2_part1/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/b_lab_ec2_pipeline/3_part2/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/b_lab_ec2_pipeline/4_part3/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/b_lab_ec2_pipeline/5_part4/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/b_lab_ec2_pipeline/6_part5/</loc>
   </url>
   
   <url>
@@ -20,12 +108,31 @@
   </url>
   
   <url>
-    <loc>http://dachad.github.io/devops-training/home/</loc>
-    <priority>0</priority>
+    <loc>http://dachad.github.io/devops-training/1_what_is_devops/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/3_config_management/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/5_amazon_irruption/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/9_devops_transition/</loc>
   </url>
   
   <url>
     <loc>http://dachad.github.io/devops-training/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/a_lab_ansible/</loc>
+  </url>
+  
+  <url>
+    <loc>http://dachad.github.io/devops-training/b_lab_ec2_pipeline/</loc>
   </url>
   
   <url>

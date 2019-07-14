@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>Infrastructure as Code or Infrastructure as Configuration?</title>
+
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/devops-training/reveal-js/css/reveal.css"><link rel="stylesheet" href="/devops-training/custom.css" id="theme"><link rel="stylesheet" href="/devops-training/highlight-js/default.min.css">
+    
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+  
+
+
+
+<section data-noprocess data-shortcode-slide
+    data-background="#4d163b"
+    class="title"
+    data-template="title"
+      data-background-image="images/Title.png">
+  
+
+<h1 id="transición-a-devops">Transición a DevOps</h1>
+
+</section><section>
+
+<h2 id="contenidos">Contenidos</h2>
+
+<table>
+<thead>
+<tr>
+<th></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>¿Qué esperar de este capítulo?</td>
+</tr>
+
+<tr>
+<td>Encaje DevOps en la organización</td>
+</tr>
+
+<tr>
+<td>Introduciendo la cultura DevOps</td>
+</tr>
+
+<tr>
+<td>DevOps y tecnología</td>
+</tr>
+</tbody>
+</table>
+</section>
+
+  
+<section data-shortcode-section>
+<p><section data-noprocess data-shortcode-slide
+    data-background="#f7cbbf"
+    class="subtitle"
+    data-template="subtitle"></p>
+
+<h2 id="qué-esperar-de-este-capítulo">¿Qué esperar de este capítulo?</h2>
+
+</section><section>
+
+<h2 id="no-no-hay-poción-mágica">No, no hay poción mágica&hellip;</h2>
+
+<p><img src="http://www.dw.com/image/17156689_303.jpg" alt="" /></p>
+
+</section><section>
+
+<p><strong>&hellip; pero traemos un conjunto de recomendaciones, recetas y consejos que pueden ayudar a la implantación de DevOps en una compañía</strong></p>
+
+<p><img src="http://ideesrevues.com/wp-content/uploads/2016/11/2048x1536-fit_asterix-conrad.jpg" style="width:80%;"></p>
+
+</section><section>
+
+<h2 id="ten-presente-que">Ten presente que&hellip;</h2>
+
+<p>No hay un checklist ni un estándar que te hace &ldquo;<strong>100% DevOps</strong>&rdquo;, y ciertas prácticas y formas de trabajo pueden tener
+un impacto positivo, independientemente del estado de adopción de DevOps en una compañía.</p>
+
+<p>Recuerda&hellip;</p>
+
+</section><section>
+
+<blockquote>
+<p><em>No te importe experimentar; no hay un camino único, ni unas prácticas escritas en piedra</em></p>
+</blockquote>
+
+<p><img src="http://www.arch.mcgill.ca/prof/sijpkes/abc-structures-2005/Lectures-2005/lecture-3/obelix20tailleur20.jpg" style="width:40%;"></p>
+
+</section><section>
+
+<blockquote>
+<p><em>Intenta medir los resultados y la satisfacción tras cada paso. Un paso atrás puede ayudarte a dar
+un gran salto hacia adelante</em></p>
+</blockquote>
+
+<p><img src="https://i.pinimg.com/736x/47/6c/1f/476c1fbcc3197405e53c56a46ab5245b--obelix-aldea.jpg" alt="" /></p>
+
+</section>
+</section><section data-shortcode-section>
+<p><section data-noprocess data-shortcode-slide
+    data-background="#f7cbbf"
+    class="subtitle"
+    data-template="subtitle"></p>
+
+<h2 id="encaje-devops-en-la-organización">Encaje DevOps en la organización</h2>
+
+</section><section>
+
+<h2 id="silos-everywhere">Silos everywhere</h2>
+
+<p>Los &ldquo;silos&rdquo; son probablemente uno de los adversarios para el cambio en una organización, y especialmente
+contrarios a los principios Agile y DevOps</p>
+
+<blockquote>
+<p><strong>No crees silos para romper silos</strong></p>
+</blockquote>
+
+</section><section>
+
+<h2 id="qué-entendemos-por-un-silo">¿Qué entendemos por un silo?</h2>
+
+<div id="left">
+
+<img src="https://vignette.wikia.nocookie.net/asterix/images/a/ad/Getafix_brewing.jpg/revision/latest?cb=20150710202238" style="width:100%;">
+
+</div>
+
+<div id="right">
+<br><br>
+<i>Equipo, individuo(s) o servicios que centralizan el control/uso de una tecnología, capa o proceso, fácilmente
+convirtiéndose en un bloqueante o cuello de botella para la productividad del resto de la organización</i>
+</div>
+
+</section><section>
+
+<p><strong>Ejemplos:</strong></p>
+
+<ul>
+<li>Equipo de despliegue, en el que cualquier despliegue requiere su intervención</li>
+<li>Equipo de QA, en el que cualquier validación requiere de involucrarlos</li>
+<li>Equipo de &ldquo;gestión de infraestructura&rdquo;, en el que cualquier cambio o despliegue de infraestructura pasa por ello</li>
+</ul>
+
+</section><section>
+
+<h2 id="sin-embargo">Sin embargo&hellip;</h2>
+
+<p>&hellip; los &ldquo;silos&rdquo; pueden ser el punto de partida. Y una vía evolutiva, y no totalmente disruptiva respecto a la estructura
+inicial de la organización, puede existir.</p>
+
+<p><img src="https://i.pinimg.com/originals/29/c3/36/29c3369df8b34ba75eac61e55d43f73b.jpg" alt="" /></p>
+
+</section><section>
+
+<h2 id="cambiando-las-reglas-de-colaboración-entre-equipos">Cambiando las reglas de colaboración entre equipos</h2>
+
+<div id="left">
+<ul>
+  <li>"Abrir tickets", "solicitar recursos", "asignar tareas en un proyecto" o "entregar una documentación" no es la forma de crear la chispa que convierta la gestión de infraestructura y procesos en software</li>
+  <ul><li>Mas la colaboración y motivación se ven afectadas</li></ul>
+  <li>Por lo contrario:</li>
+    <ul>
+    <li>crear "herramientas" (pueden ser simples scripts)</li>
+    <li>abrir APIs</li>
+    <li>proporcionar "instalables" o componentes reusables </li>
+    <li>¡Sí lo puede ser!</li>   
+    </ul>
+
+</ul>
+
+</div>
+
+<div id="right">
+
+<img src="https://i.pinimg.com/originals/4d/41/bd/4d41bde6c793b8a03cc96ce54c9c993b.jpg" style="width:100%;">
+</div>
+
+</section><section>
+
+<h2 id="mezclando-equipos">Mezclando equipos</h2>
+
+<div id="left">
+
+
+<ul>
+  <li>Un mecanismo para compartir conocimiento y facilitar la gestión de dependencias puede consistir en <b>embeber</b> ingenieros en los equipos de producto/cliente/funcionalidad que los consuman</li>
+    <li>Es una opción tanto temporal, como de más largo recorrido</li>
+    <ul>
+        <li>En el primer caso, el objetivo puede ser "empujar" a una de las partes a adoptar ciertas prácticas o ganar autonomía</li>
+        <li>O probar/ayudar a madurar una API viendo el "extremo cliente"</li>
+        <li>En el segundo, podemos estar remando hacia...</li>
+    </ul>
+</ul>
+
+</div>
+<div id="right">
+<br>
+<img src="https://i.pinimg.com/originals/e6/15/e2/e615e285975ae20e33d7773f93c7d2a8.jpg" style="width:80%;">
+</div>
+
+</section><section>
+
+<h2 id="devops-como-grupo-de-interés">DevOps como grupo de interés</h2>
+
+<div id="left">
+
+<img src="https://cdn.shopify.com/s/files/1/0969/9128/products/Asterix_Obelix_And_Dogmatix_-_Boar_b741a28d-753c-47b7-ac9d-856e1688314b.jpg?v=1519467940" style="width:100%;">
+</div>
+
+<div id="right">
+* DevOps no como un equipo vertical, sino como una estructura horizontal 
+* Esta estructura puede crear una red de compartición de conocimiento, prácticas y búsqueda de soluciones conjuntas
+* Pero evita lineas de reporting paralelas, o usar dichas redes para hacer "push" de grandes proyectos.
+</div>
+
+</section><section>
+
+<h2 id="consultoría-con-cuidado">Consultoría&hellip; con cuidado</h2>
+
+<p>La consultoría en IT suele ser consecuencia de:</p>
+
+<ul>
+<li>tecnologías que requieren mucha especialización</li>
+<li>y/u organizaciones que acaban albergando equipos 100% de operaciones</li>
+</ul>
+
+<p>Piénsalo bien antes de entrar en la rueda; consejos y puntos de vista externos pueden ser positivos puntualmente,
+pero desacoplar &ldquo;quien&rdquo; implementa de &ldquo;quien&rdquo; opera puede ser un error.</p>
+
+<p><img src="http://s2.static-clubeo.com/uploads/vttarverneslabrochateaugay/news/repas-gaulois__nvyiuo.jpg" style="width:40%;"></p>
+
+</section><section>
+
+<h2 id="y-si-todo-lo-demás-falla">Y si todo lo demás falla&hellip;</h2>
+
+<p>&hellip; crear una organización paralela puede no ser descabellado. Ésta no tiene por qué competir con la original, e incluso
+pueden marcarse objetivos distintos&hellip; pero con una convergencia en el horizonte.</p>
+
+<p><img src="asterix_rembrandt_image3A.jpg" alt="" /></p>
+
+</section>
+</section><section data-shortcode-section>
+<p><section data-noprocess data-shortcode-slide
+    data-background="#f7cbbf"
+    class="subtitle"
+    data-template="subtitle"></p>
+
+<h2 id="introduciendo-la-cultura-devops">Introduciendo la cultura DevOps</h2>
+
+<!-- https://www.slideshare.net/meriwilliams/dev-ops-inthewildeduservsymposiummay2013compressed -->
+
+</section><section>
+
+<h2 id="experimentación-con-canarios-pilotos">Experimentación con &ldquo;canarios&rdquo;/&ldquo;pilotos&rdquo;</h2>
+
+<p>&hellip; en busca de la creación de una historia de éxito mediante un proyecto que siga marque un nuevo rumbo</p>
+
+<p><img src="https://static1.squarespace.com/static/54e652f6e4b021b682b6d4d1/t/5623ed16e4b09501ec5e3e70/1445195031562/" style="width:80%;"></p>
+
+</section><section>
+
+<h2 id="empujando-al-autoservicio">Empujando al autoservicio</h2>
+
+<p>Convierte a tus equipos en proveedores internos&hellip; El autoservicio puede hacer más atractivos, competitivos,
+confiables y útiles los servicios internos</p>
+
+<p><img src="http://2.bp.blogspot.com/-6z4obDXUzrY/Vii-oAn_LlI/AAAAAAAAeoA/a07AW5VSPdE/s1600/Obelix-et-Falbala.jpg" style="width:50%;"></p>
+
+</section><section>
+
+<h2 id="usando-gamificación">Usando gamificación</h2>
+
+<blockquote>
+<p><em>&ldquo;No todo en la vida es diversión&rdquo;</em> pero, un poco, sienta bien</p>
+</blockquote>
+
+<div id="left">
+<br>
+<br>
+
+* [https://devopsgames.com/](https://devopsgames.com/)
+* Retos internos
+* Acertijos internos
+* Sistemas de puntos...
+</div>
+<div id="right">
+<img src="https://i.pinimg.com/originals/96/bb/ad/96bbad187970f16f6489142942865b8c.jpg" style="width:100%;">
+
+</div>
+
+</section><section>
+
+<h2 id="la-voz-del-experto-externo">La voz del experto externo</h2>
+
+<p><img src="https://images-na.ssl-images-amazon.com/images/I/81Vyn%2BKvFsL._SL1200_.jpg" style="width:80%;"></p>
+
+</section><section>
+
+<h2 id="conferencias-y-cursos">Conferencias y cursos&hellip;</h2>
+
+<p>&hellip; como herramientas de aprendizaje y motivación. DevOps Barcelona, QCon, Jax, Interop, Velocity, CloudNative&hellip;</p>
+
+<p><img src="http://bullesdeculture.org/bdc-content/uploads/2017/10/asterix-et-la-transitalique-image-conference-de-presse-01.jpg" style="width:70%;"></p>
+
+</section><section>
+
+<h2 id="usando-planes-de-desarrollo">Usando planes de desarrollo</h2>
+
+<div id="right">
+Pueden permitir la introducción de:
+
+* Lectura de libros
+* Experimentación con prácticas
+* Compartición de conocimiento
+* Metas concretas y realizables
+
+</div>
+<div id="left">
+<img src="http://www.mediatoon-distribution.com/_caches/jimages/2cba24b62ce6e63faefb6ad0241d82c5ba1879bc.jpg" style="width:100%;">
+
+</div>
+
+</section><section>
+
+<h2 id="sesiones-internas-y-demos">Sesiones internas y demos</h2>
+
+<p><img src="http://www.planocritico.com/wp-content/uploads/2014/11/asterix-gladiador-im-des-600x400.jpg" alt="" /></p>
+
+</section><section>
+
+<h2 id="acompañar-la-adopción-de-la-mano-de-agile">Acompañar la adopción de la mano de Agile</h2>
+
+<p><img src="https://www.artistsuk.co.uk/acatalog/Asterix_indian_rope_trick_mini.jpg" alt="" /></p>
+
+</section><section>
+
+<h2 id="retrospectivas-y-mejora-continua">Retrospectivas y mejora continua</h2>
+
+<p>Siempre busca las lecturas positivas, y potencia la autocrítica de la forma más constructiva y divertida posible</p>
+
+<p><img src="http://4.bp.blogspot.com/-ZJvoYe6Xql4/UC425LmIOEI/AAAAAAAAADg/-fHgZwvsfv4/s1600/Untitled.png" alt="" /></p>
+
+</section><section>
+
+<h2 id="apoyarse-en-la-comunidad">Apoyarse en la Comunidad</h2>
+
+<p>Existe una gran comunidad cerca de tí u online dispuesta a ayudar (por ejemplo Meetups)</p>
+
+<p><img src="https://vignette.wikia.nocookie.net/asterix/images/b/b4/Asterix_-_Cast.jpg/revision/latest" style="width:75%;"></p>
+
+</section><section>
+
+<h2 id="compartir-objetivos">Compartir objetivos</h2>
+
+<p>Definir objetivos compartidos para que gente de diversos equipos remen en la misma dirección</p>
+
+<p><img src="http://3.bp.blogspot.com/-5YcH4JWu4t4/Uj8KaNZ1-ZI/AAAAAAAAA4Y/Mzug-h9P9QU/s1600/asterix+-+obelix+y+compa%C3%B1ia+-+46b.jpg" alt="" /></p>
+
+</section>
+</section><section data-shortcode-section>
+<p><section data-noprocess data-shortcode-slide
+    data-background="#f7cbbf"
+    class="subtitle"
+    data-template="subtitle"></p>
+
+<h2 id="devops-y-tecnología">DevOps y tecnología</h2>
+
+</section><section>
+
+<h2 id="dejar-a-un-lado-las-migraciones">Dejar a un lado las migraciones&hellip;</h2>
+
+<p>&hellip; y empezar a construir sobre terreno limpio puede ayudar a empezar con buen pie</p>
+
+<p><img src="https://i.pinimg.com/736x/8c/f7/0f/8cf70f3489288ad3094f432ca9c0c8d6--asterix-obelix-asterix-and-obelix-comics.jpg" style="width:40%;"></p>
+
+</section><section>
+
+<h2 id="mantener-código">Mantener código&hellip;</h2>
+
+<p><img src="Asterix05.bmp" alt="" /></p>
+
+<p>&hellip; debe asumirse como conveniente, pues permite construir puentes entre componentes, proveedores y las necesidades
+de la compañía</p>
+
+</section><section>
+
+<h2 id="proveedores-cloud">Proveedores Cloud</h2>
+
+<p>La introducción o cambios de proveedores cloud, y permitir el acceso directo a los desarrolladores, reducirá notablemente la
+pendiente de la cuesta</p>
+
+<p><img src="https://i0.wp.com/www.yentelman.com/wp-content/uploads/2017/10/Ob%C3%A9lix.png?ssl=1" alt="" /></p>
+
+</section><section>
+
+<h2 id="selección-de-proveedores-componentes-y-tecnologías">Selección de proveedores, componentes y tecnologías</h2>
+
+<p>Busca y valora siempre las posibilidades programáticas (APIs, SDKs&hellip;). Y si van de la mano de software opensource,
+aún mejor. Desconfía de los grandes fabricantes (¿vendor lock-in?)</p>
+
+<p><img src="https://images-na.ssl-images-amazon.com/images/I/91Xq4ItI1BL.jpg" style="width:80%;"></p>
+
+</section><section>
+
+<h2 id="experimenta-con-paas-faas">Experimenta con PaaS/FaaS</h2>
+
+<p>Puede facilitar el aprendizaje y ayudar a ganar velocidad en las primeras fases</p>
+
+<p><img src="https://mojtv.hr/thumb.ashx?path=/images/a929d432-16d7-4830-8cb1-d1ef3a81f4fa.jpg&amp;w=491&amp;h=250" alt="" /></p>
+
+</section><section>
+
+<h2 id="no-busques-acertar-a-la-primera">No busques acertar a la primera</h2>
+
+<p>Y no te importe reescribir código/servicios hasta encontrar la combinación ganadora</p>
+
+<p><img src="https://www.artistsuk.co.uk/acatalog/Asterix_Obelix_desert_mini.jpg" alt="" /></p>
+
+</section><section>
+
+<h2 id="apuesta-por-testing-continuo">Apuesta por testing (continuo)</h2>
+
+<p>A mayor confianza tengas sobre el código que vayas construyendo, mas velocidad podrás conseguir</p>
+
+<p><img src="https://blogdesuperheroes.es/wp-content/plugins/BdSGallery/BdSGaleria/58886.jpg" style="width:80%;"></p>
+
+</section><section>
+
+<h2 id="servicios-sin-estado">Servicios sin estado</h2>
+
+<p>Empezar construyendo los servicios que menos estado gestionan. Y cuando se requiera mantener estado, no lo
+guardes dentro de tu servicio</p>
+
+<p><img src="https://farm5.staticflickr.com/4735/38390074584_1869a8a3aa_b.jpg" style="width:50%;"></p>
+
+</section><section>
+
+<h2 id="no-te-importe-cambiar-el-toolset-actual">No te importe cambiar el toolset actual</h2>
+
+<p>Por ejemplo, la monitorización basada en &ldquo;pulling&rdquo; te dará problemas ante plataformas de naturaleza dinámica</p>
+
+<p><img src="https://www.artistsuk.co.uk/acatalog/Asterix_Obelix_boat_mini.jpg" alt="" /></p>
+
+</section><section>
+
+<h2 id="buy-or-build">Buy or Build</h2>
+
+<p>Ambas opciones són viables, pero debes valorar en cada situación la que mejor se adapta</p>
+
+<p><img src="http://www.frikimalismo.com/wp-content/uploads/2013/10/images_quidem_Asterix%20Romanos.gif" alt="" /></p>
+
+</section><section>
+
+<h2 id="a-por-ello">¡A por ello!</h2>
+
+<p><img src="https://factfile.org/wp-content/uploads/2015/04/Facts-about-Asterix.jpg" alt="" /></p>
+
+<blockquote>
+<p><strong>be the automator, not the automated</strong></p>
+</blockquote>
+
+</section>
+</section><section data-shortcode-section>
+<section data-noprocess data-shortcode-slide
+    data-background="#f7cbbf"
+    class="subtitle"
+    data-template="subtitle"></p>
+
+<h2 id="herramientas-para-iac">Herramientas para IaC</h2>
+
+<!-- iac_ecosystem.png -->
+
+<!-- https://martinfowler.com/bliki/PhoenixServer.html -->
+
+</section><section>
+
+<h2 id="ecosistema-para-infraestructura">Ecosistema para Infraestructura</h2>
+
+<table>
+<thead>
+<tr>
+<th>Herramienta</th>
+<th>Phoenix (Inmutable)</th>
+<th>Snowflake (Estado deseado)</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><strong>Deploy</strong></td>
+<td>-</td>
+<td>Cambios config (AWS Cloudformation, Terraform) - Ejecución remota (Ansible)</td>
+</tr>
+
+<tr>
+<td><strong>Runtime</strong></td>
+<td>-</td>
+<td>Cambios config (Terraform) - Ejecución remota (Ansible)</td>
+</tr>
+</tbody>
+</table>
+
+</section><section>
+
+<h2 id="ecosistema-para-sistemas">Ecosistema para Sistemas</h2>
+
+<table>
+<thead>
+<tr>
+<th>Herramienta</th>
+<th>Phoenix (Inmutable)</th>
+<th>Snowflake (Estado deseado)</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><strong>Base</strong></td>
+<td>Images (ISO, AMI, BOX etc.) - Tools (Packer, Vagrant, VeeWee)</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td><strong>Deploy</strong></td>
+<td>Orquestración (Mesos, AWS ASG, Vagrant) - PXE (Cobbler, FAI, Kickstart)</td>
+<td>Provisión (Cloud-init, Cfn-init, KickStart)</td>
+</tr>
+
+<tr>
+<td><strong>Runtime</strong></td>
+<td>-</td>
+<td>Cambios config (Chef, Puppet, CFEngine) - Ejecución remota (Ansible, Saltstack)</td>
+</tr>
+</tbody>
+</table>
+
+</section><section>
+
+<h2 id="ecosistema-para-aplicaciones">Ecosistema para Aplicaciones</h2>
+
+<table>
+<thead>
+<tr>
+<th>Herramienta</th>
+<th>Phoenix (Inmutable)</th>
+<th>Snowflake (Estado deseado)</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><strong>Base</strong></td>
+<td>Container Images (Docker) - Tools (Packer, Dockerfile)</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td><strong>Deploy</strong></td>
+<td>Orquestración (Mesos, Kubernetes) - Ejecución remota (Ansible, Saltstack)</td>
+<td>Ejecución remota (Fabric, Capristrano, Saltstack, Ansible)</td>
+</tr>
+
+<tr>
+<td><strong>Runtime</strong></td>
+<td>-</td>
+<td>Cambios config (Chef, Puppet, CFEngine) - Ejecución remota (Ansible, Saltstack)</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+</div>
+      
+
+    </div>
+<script type="text/javascript" src=/devops-training/reveal-hugo/object-assign.js></script>
+
+<a href="/devops-training/reveal-js/css/print/" id="print-location" style="display: none;"></a>
+<script type="text/javascript">
+  var printLocationElement = document.getElementById('print-location');
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = printLocationElement.href + (window.location.search.match(/print-pdf/gi) ? 'pdf.css' : 'paper.css');
+  document.getElementsByTagName('head')[0].appendChild(link);
+</script>
+
+<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom.css","slide_number":true}</script>
+<script type="application/json" id="reveal-hugo-page-params">{"templates":{"subtitle":{"background":"#f7cbbf","class":"subtitle"},"title":{"background":"#4d163b","class":"title"}}}</script>
+
+<script src="/devops-training/reveal-js/lib/js/head.min.js"></script>
+<script src="/devops-training/reveal-js/js/reveal.js"></script>
+
+<script type="text/javascript">
+  
+  
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+  
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
+  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams));
+  Reveal.initialize(options);
+</script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/lib/js/classList.js"></script>
+
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/markdown/marked.js"></script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/markdown/markdown.js"></script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/highlight/highlight.js"></script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/zoom-js/zoom.js"></script>
+
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/notes/notes.js"></script>
+
+
+
+<script type="text/javascript">
+if (hljs)
+  hljs.initHighlightingOnLoad();
+</script>
+    
+    
+  </body>
+</html>

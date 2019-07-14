@@ -1,0 +1,1051 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>Infrastructure as Code or Infrastructure as Configuration?</title>
+
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/devops-training/reveal-js/css/reveal.css"><link rel="stylesheet" href="/devops-training/custom.css" id="theme"><link rel="stylesheet" href="/devops-training/highlight-js/default.min.css">
+    
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+  
+
+
+
+<section data-noprocess data-shortcode-slide
+    data-background="#4d163b"
+    class="title"
+    data-template="title"
+      data-background-image="images/Title.png">
+  
+
+<h1 id="irrupción-de-amazon">Irrupción de Amazon</h1>
+
+<table>
+<thead>
+<tr>
+<th></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Rompiendo silos</td>
+</tr>
+
+<tr>
+<td>Nueva aproximación al almacenamiento</td>
+</tr>
+
+<tr>
+<td>Infrastructura dinámica</td>
+</tr>
+
+<tr>
+<td>Infrastructura como código</td>
+</tr>
+</tbody>
+</table>
+</section>
+
+  
+<section><section data-shortcode-section>
+<h2 id="plataformas-de-infraestructura-dinámica">Plataformas de Infraestructura Dinámica</h2>
+
+</section><section>
+
+<h2 id="qué-es-una-plataforma-de-infraestructura-dinámica">¿Qué es una Plataforma de Infraestructura Dinámica?</h2>
+
+<blockquote>
+<p><strong>Es una combinación software y hardware aplicada a datacenters,
+que permite ofrecer recursos que pueden ser provisionados y gestionados de forma programática</strong></p>
+</blockquote>
+
+<p>El avance de la Infraestructura Dinámica ha permitido consolidar lo que hoy conocemos como
+<strong>Cloud</strong> (tras el intento del Grid Computing)</p>
+
+<blockquote>
+<p>No importa la tecnología base (cloud, virtualización o bare-metal), lo importante es que existan
+<strong>mecanismos, herramientas y un nivel de automatización</strong> que permita <strong>su gestión dinámica</strong>.
+Eso sí, <strong>ciertas tecnologías ayudan</strong> a implementar estas aproximaciones.</p>
+</blockquote>
+
+</section><section>
+
+<h2 id="características-del-cloud-nist">Características del Cloud (NIST)</h2>
+
+<ul>
+<li><strong>On-demand self-service</strong> (provisión)</li>
+<li><strong>Broad network access</strong> (disponible vía red con mecanismos estándares)</li>
+<li><strong>Resource Pooling</strong> (multitenancy/multicliente)</li>
+<li><strong>Rapid elasticity</strong> (añadir / quitar elementos en minutos / segundos)</li>
+<li><strong>Measured service</strong> (control sobre el uso de recursos)</li>
+</ul>
+
+<!-- http://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-145.pdf -->
+
+</section><section>
+
+<h2 id="características-ii">Características (II)</h2>
+
+<ul>
+<li><strong>Programable</strong>: La interacción con scripts y aplicaciones debe ser directa
+
+<ul>
+<li>API (Application Programming Interface)</li>
+<li>REST API y SDK</li>
+</ul></li>
+<li><strong>On-demand</strong>: La creación o destrucción debe ser inmediata y sin interacciones de terceros
+
+<ul>
+<li>El pago por servicio debe ser por uso, pago por horas/minutos/segundos o capacidad consumida</li>
+</ul></li>
+<li><strong>Self-service</strong>: Los usuarios deben ser capaces de adaptar los recursos a sus requisitos
+
+<ul>
+<li>El departamento de Infraestructura no crea infraestructura, sino herramientas y servicios
+para que cada equipo de desarrollo pueda generar, e incluso mantener, la infraestructura que necesita
+<br /></li>
+</ul></li>
+</ul>
+
+</section><section>
+
+<h2 id="qué-recursos-proporcionan">¿Qué recursos proporcionan?</h2>
+
+<div id="left">
+
+Aunque muchas plataformas ofrecen una larga lista de servicios, todos combinan los siguientes tres:
+<br>
+<ul>
+  <li>Computación</li>
+  <li>Storage</li>
+  <li>Networking</li>
+</ul>
+
+</div>
+<div id="right">
+<!-- https://docs.google.com/drawings/d/11AWajqyKC8Q3UswXEf5K2ISkyAIjI41cJ5z0jq17Uls/edit -->
+<img src="https://docs.google.com/drawings/d/11AWajqyKC8Q3UswXEf5K2ISkyAIjI41cJ5z0jq17Uls/pub?w=582&h=582" style="width:100%;">
+
+</div>
+
+</section><section>
+
+<h2 id="tipos-de-cloud-según-ownership">Tipos de Cloud según &ldquo;ownership&rdquo;</h2>
+
+<ul>
+<li><strong>Cloud Público</strong>
+
+<ul>
+<li>Servicio estándar para múltiples clientes</li>
+<li>Cada cliente paga sólo por lo que usa</li>
+</ul></li>
+<li><strong>Cloud Privado</strong>
+
+<ul>
+<li>Servicio privada para múltiples consumidores de una misma organización</li>
+<li>La organización paga por el total de recursos desplegados</li>
+</ul></li>
+<li><strong>Cloud Híbrido</strong>
+
+<ul>
+<li>Simplemente es que parte de la infraestructura corra en un cloud privado y otra en cloud público</li>
+<li>Razones como regulación/seguridad, capacidad o amortización</li>
+</ul></li>
+<li><strong>Cloud de Comunidad</strong>
+
+<ul>
+<li>Infraestructura compartida por diversas organizaciones</li>
+<li>Puede ser interno o externo
+<br /></li>
+</ul></li>
+</ul>
+
+</section><section>
+
+<h2 id="ejemplos">Ejemplos</h2>
+
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Proveedores o Productos</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Public IaaS cloud</td>
+<td>AWS, Azure, Digital Ocean, GCE, Rackspace Cloud</td>
+</tr>
+
+<tr>
+<td>Private IaaS cloud</td>
+<td>CloudStack, OpenStack, VMware vCloud</td>
+</tr>
+
+<tr>
+<td>Bare-metal cloud</td>
+<td>Cobbler, FAI, Foreman</td>
+</tr>
+</tbody>
+</table>
+
+</section><section>
+
+<h2 id="tipos-de-cloud-según-modelo-de-servicio-nist">Tipos de Cloud según modelo de servicio (NIST)</h2>
+
+<ul>
+<li><strong>Software as a Service (SaaS)</strong>
+
+<ul>
+<li>Una aplicación que se comparte entre diferentes usuarios</li>
+<li>Ejemplos: Google Docs, Outlook365</li>
+</ul></li>
+<li><strong>Platform as a Service (PaaS)</strong>
+
+<ul>
+<li>Una plataforma ya preparada para ser usada junto a las aplicaciones</li>
+<li>Ejemplos: Heroku, Amazon DynamoDB, Google App Engine</li>
+</ul></li>
+<li><strong>Infrastructure as a Service (IaaS)</strong>
+
+<ul>
+<li>Infraestructura hardware compartida para crear encima infraestructura para los servicios</li>
+<li>Ejemplos: AWS EC2, GCE</li>
+</ul></li>
+</ul>
+
+</section><section>
+
+<h2 id="diferentes-definiciones-del-cloud">Diferentes definiciones del Cloud</h2>
+
+<p><img src="https://get.cloudbolt.io/hs-fs/hubfs/blog-images/nist-cloud.gif?t=1493733144491&width=1240&height=730&name=nist-cloud.gif" style="width:130%;"></p>
+
+</section><section>
+
+<h2 id="la-gran-pregunta-público-o-privado">La gran pregunta: ¿público o privado?</h2>
+
+<p>Aspectos a tener en cuenta:</p>
+
+<ul>
+<li>Seguridad y protección de datos</li>
+<li>Requisitos legales según la localización del hosting</li>
+<li>Capacidad variable</li>
+<li>Coste total de crear tu propio Cloud vs economía de escala</li>
+<li>Elemento diferenciador, cercanía al negocio o commodity</li>
+<li>Presencia de elementos legacy o soluciones físicas específicas</li>
+</ul>
+
+</section>
+</section><section><section data-shortcode-section>
+<h2 id="réplica-de-datos-cap-theorem">Réplica de Datos: CAP theorem</h2>
+
+<p><img src="../images/captheorem.png" style="width:100%;"></p>
+
+</section><section>
+
+<h2 id="nosql">NoSQL</h2>
+
+<p><img src="http://www.kdnuggets.com/wp-content/uploads/sql-nosql-dbs.jpg" alt="" /></p>
+
+<ul>
+<li><strong>Document model</strong>: Los datos se guardan en documentos, tipo estructura JSON (e.g. CouchDB, MongoDB)</li>
+<li><strong>Graph model</strong>: Las estructura de graphs simplifican el modelado de relaciones entre entidades (e.g. HyperGraphDB, Neo4j)</li>
+<li><strong>Key-Value &amp; Wide-Column model</strong>: Estructura básica, donde sólo se consulta via Keys (e.g. Cassandra, Redis, DynamoDB)</li>
+</ul>
+
+<!-- https://www.netsolutions.com/insights/5-things-you-must-consider-adopt-nosql-databases-mongodb/ -->
+
+</section><section>
+
+<h2 id="continuidad-de-datos">Continuidad de datos</h2>
+
+<p>La persistencia de los datos es un reto particular de la infraestructura dinámica. ¿cómo podemos afrontarlo?</p>
+
+<ul>
+<li><strong>Replicar datos</strong>, simplemente asegurar que los datos de una instancia estén replicados en otra antes de destruirla</li>
+<li><strong>Regenerar datos</strong>, hay datos que pueden ser generados a partir del <em>System of record</em>,
+en estos casos no es necesario proteger los datos, sino ser capaz de regenerarlos</li>
+<li><strong>Delegar datos</strong>, existen servicios de storage as a service (AWS S3, etc.) o simplemente storage externo (SAN, NFS),
+esto permite desacoplar los problemas y focalizar en cada parte</li>
+<li><strong>Back up a storage persistente</strong>, los anteriores se refieren principalmente a <em>runtime data</em>,
+pero hay datos que deben permanecer después de la ejecución. Aunque utilicemos entornos Cloud,
+no podemos esquivar nuestras responsabilidades y tener claro físicamente donde se almacenan nuestros datos.
+
+<ul>
+<li>Truco: utilizar un proveedor diferente de infraestructura para ciertos datos es sencillo y proporciona un extra de seguridad</li>
+</ul></li>
+</ul>
+
+</section>
+</section><section><section data-shortcode-section>
+<h2 id="gestión-dinámica-de-la-capacidad">Gestión dinámica de la capacidad</h2>
+
+<p>¡Uno de los grandes beneficios del Cloud!</p>
+
+<p>¿En base a qué decidimos aumentar/disminuir nuestra capacidad?</p>
+
+<ul>
+<li>Eventos preprogramados (pre-warming; efectos estacionales)</li>
+<li>Utilización de CPU</li>
+<li>Métricas de sistema</li>
+<li>Número de trabajos/mensajes pendientes</li>
+</ul>
+
+<div id="left">
+<img src="http://a248.e.akamai.net/f/248/3214/1d/www.zones.com/images/static/ss-why-cloud-promo.jpg" style="width:80%;">
+</div>
+
+<div id="right">
+<img src="http://docs.aws.amazon.com/autoscaling/latest/userguide/images/as-basic-diagram.png" style="width:100%;">
+</div>
+
+</section><section>
+
+<h2 id="client-vs-server-side-service-discovery">Client vs Server side Service Discovery</h2>
+
+<!-- https://www.nginx.com/blog/service-discovery-in-a-microservices-architecture/
+https://www.slideshare.net/SreenivasMakam/service-discovery-using-etcd-consul-and-kubernetes -->
+
+<div id="left">
+Client-side
+<img src="https://cdn-1.wp.nginx.com/wp-content/uploads/2016/04/Richardson-microservices-part4-2_client-side-pattern.png" style="width:80%;">
+</div>
+
+<div id="right">
+Server-side
+<img src="https://cdn-1.wp.nginx.com/wp-content/uploads/2016/04/Richardson-microservices-part4-3_server-side-pattern.png" style="width:100%;">
+</div>
+
+</section><section>
+
+<h2 id="service-discovery">Service Discovery</h2>
+
+<blockquote>
+<p>&ldquo;Distributed systems are hard&rdquo;</p>
+</blockquote>
+
+<p>Opciones:</p>
+
+<ul>
+<li>Anuncios Multicast/Broadcast</li>
+<li>Hardcoded IPs (individuales o rangos) + DNS lookup</li>
+<li>Registrarse individualmente en los servicios clientes</li>
+<li>Service Registry
+
+<ul>
+<li>Los servicios se registran via REST API</li>
+<li>Los consumidores conusltan via REST API o DNS</li>
+<li>Ofrece capacidad de Health Check y Balanceo de Carga</li>
+<li>e.g. Consul, Eureka, ZooKeeper, etcd.
+<br /></li>
+</ul></li>
+</ul>
+
+<!-- https://www.nginx.com/blog/service-discovery-in-a-microservices-architecture/ -->
+
+</section><section>
+
+<h2 id="service-discovery-ejemplo">Service Discovery (ejemplo)</h2>
+
+<pre><code class="language-json"># Registro HTTP API
+
+{
+    &quot;name&quot;: &quot;servicio-frontend&quot;,
+    &quot;address&quot;:  &quot;10.0.0.12&quot;,
+    &quot;port&quot;: 8080,
+    &quot;check&quot;: {
+        &quot;http&quot;: &quot;http://10.0.0.12:8080/health&quot;,
+        &quot;interval&quot;: &quot;5s&quot;
+    }
+}
+
+$ curl -X PUT -d @servicio-frontend.json localhost:8500/v1/agent/service/register 
+
+# Consulta HTTP API
+
+$ curl -s http://192.168.99.106:8500/v1/catalog/service/servicio-frontend
+
+[{
+    &quot;Node&quot;: &quot;f2266cec556&quot;,
+    &quot;ServiceID&quot;: &quot;servicio-frontend&quot;,
+    &quot;ServiceName&quot;: &quot;servicio-frontend&quot;,
+    &quot;Address&quot;:  &quot;10.0.0.12&quot;
+    &quot;ServicePort&quot;: 8080,
+}]
+</code></pre>
+
+</section>
+</section><section><section data-shortcode-section>
+<h2 id="desarrollo-de-código-y-devops">Desarrollo de Código y DevOps</h2>
+
+<p>DevOps impulsa el uso de código para configurar, desplegar, actualizar y solventar problemas que van desde la infraestructura a la Aplicación.</p>
+
+<blockquote>
+<p><strong>Por ende, una gestión eficiente y eficaz del código pasa a ser un skill fundamental de los equipos y roles DevOps</strong></p>
+</blockquote>
+
+</section><section>
+
+<h2 id="un-código-no-gestionable-ó-no-fiable-sólo-aporta-más-problemas-al-ecosistema">Un código no gestionable ó no fiable sólo aporta más problemas al ecosistema</h2>
+
+</section><section>
+
+<h2 id="no-todo-vale">No todo vale&hellip;</h2>
+
+<ul>
+<li><em>&ldquo;Pero si es un script&rdquo;</em></li>
+<li><em>&ldquo;Si no forma parte del código de producción&rdquo;</em></li>
+</ul>
+
+<blockquote>
+<p>Aprovecha todas las &ldquo;best practices&rdquo; que han generado años de construcción de aplicaciones</p>
+</blockquote>
+
+</section><section>
+
+<h2 id="ejemplo-código-duplicado-y-hardcoding">Ejemplo: Código duplicado y hardcoding</h2>
+
+<ul>
+<li><p>Punto de partida: Aplicación que necesita un bucket de S3 por cliente</p>
+
+<pre><code>$ ls required_s3_buckets/
+my_super_customer_1.py my_super_customer_2.py my_super_customer_3.py my_super_customer_4.py my_super_customer_5.py
+</code></pre></li>
+</ul>
+
+<pre><code class="language-python">$ cat required_s3_buckets/my_super_customer_1.py
+from troposphere import Output, Ref, Template
+from troposphere.s3 import Bucket, PublicRead
+
+t = Template()
+
+t.add_description(
+    &quot;Bucket management for my_super_customer_1&quot;)
+
+s3bucket = t.add_resource(Bucket(&quot;S3Bucket&quot;, AccessControl=PublicRead,))
+
+t.add_output(Output(
+    &quot;BucketName&quot;,
+    Value=Ref(s3bucket),
+    Description=&quot;Name of S3 bucket for my_super_customer_1&quot;
+))
+
+print(t.to_json())
+</code></pre>
+
+</section><section>
+
+<h2 id="necesidad">Necesidad</h2>
+
+<p>Queremos que los buckets sólo retengan la información durante 30 días:</p>
+
+<pre><code class="language-python">from troposphere import Output, Ref, Template
+from troposphere.s3 import Bucket, PublicRead
+
+t = Template()
+
+t.add_description(
+    &quot;Bucket management for my_super_customer_1&quot;)
+
+s3bucket = t.add_resource(Bucket(
+    &quot;S3Bucket&quot;, 
+    AccessControl=PublicRead,
+    LifecycleConfiguration=LifecycleConfiguration(Rules=[
+        LifecycleRule(
+            Id=&quot;S3BucketRule1&quot;,
+            Status=&quot;Enabled&quot;,
+            ExpirationInDays=30,
+            )
+        ])
+    ))
+
+t.add_output(Output(
+    &quot;BucketName&quot;,
+    Value=Ref(s3bucket),
+    Description=&quot;Name of S3 bucket for my_super_customer_1&quot;
+))
+
+print(t.to_json())
+</code></pre>
+
+</section><section>
+
+<h2 id="el-problema">El problema</h2>
+
+<ul>
+<li>¿Hemos de modificar los 5 ficheros (que podrían ser 30)?</li>
+<li>¿Y también re-ejecutar / actualizar cada uno de los 30 stacks?</li>
+</ul>
+
+</section><section>
+
+<h2 id="mejor-aproximación">Mejor aproximación</h2>
+
+<pre><code class="language-python">def create_bucket_for_customer(customername):
+    t = Template()
+
+    t.add_description(
+        'Bucket management for {}'.format(customername))
+
+    s3bucket = t.add_resource(Bucket(
+        &quot;S3Bucket&quot;, 
+        AccessControl=PublicRead,
+        LifecycleConfiguration=LifecycleConfiguration(Rules=[
+            LifecycleRule(
+                Id=&quot;S3BucketRule1&quot;,
+                Status=&quot;Enabled&quot;,
+                ExpirationInDays=30,
+                )
+            ])
+        ))
+    
+    t.add_output(Output(
+        &quot;BucketName&quot;,
+        Value=Ref(s3bucket),
+        Description='Name of S3 bucket for {}'.format(customername)
+    ))
+    
+    return t
+</code></pre>
+
+</section><section>
+
+<h2 id="el-main-queda">El &ldquo;main&rdquo; queda&hellip;</h2>
+
+<pre><code class="language-python">customers = [
+    &quot;my_super_customer_1&quot;,
+    &quot;my_super_customer_2&quot;,
+    &quot;my_super_customer_3&quot;,
+    &quot;my_super_customer_4&quot;,
+    &quot;my_super_customer_5&quot;,
+    ]
+
+for customer in customers:
+    print(create_bucket_for_customer(customer).to_json())
+
+</code></pre>
+
+</section><section>
+
+<h2 id="aún-mejor-aproximación">Aún mejor aproximación</h2>
+
+<pre><code>$ cat customer_list.csv
+#customer_name,retention
+my_super_customer_1,30
+my_super_customer_2,30
+my_super_customer_3,50
+my_super_customer_4,60
+my_super_customer_5,30
+</code></pre>
+
+<pre><code class="language-python">customers = read_customer_list_from_csv(customer_list_file)
+
+for customer in customers:
+    print(create_bucket_for_customer(customer).to_json())
+
+</code></pre>
+
+</section><section>
+
+<h2 id="y-aún-habría-mejores">Y aún habría mejores</h2>
+
+<ul>
+<li>Cloudformation acepta el uso de variables</li>
+<li>¿Podríamos integrar la automatización del alta de clientes en la llamada a API correspondiente?</li>
+</ul>
+
+</section><section>
+
+<h2 id="patrones-para-definir-la-infraestructura">Patrones para definir la infraestructura</h2>
+
+</section><section>
+
+<h2 id="stack-la-unidad-básica">Stack, la unidad básica</h2>
+
+<blockquote>
+<p><strong>Stack</strong>: conjunto de elementos de infraestructura que se definen/empaquetan/gestionan como una unidad</p>
+</blockquote>
+
+<p>Un stack puede ser un único servidor, toda la infraestructura relacionada con una aplicación o hasta un CPD entero</p>
+
+</section><section>
+
+<h2 id="organizando-stacks">Organizando stacks</h2>
+
+<ul>
+<li>Monolítico</li>
+<li>Tiers</li>
+<li>Stacks compartidos</li>
+<li>Microservicios</li>
+</ul>
+
+</section><section>
+
+<h2 id="monolítico">Monolítico</h2>
+
+<p><img src="https://docs.google.com/drawings/d/12OC-_Z7HzOSQ8w6xaVjEQkRDgYdb2H6dK4G35L0r624/pub?w=742&h=934" style="width:50%;"></p>
+
+</section><section>
+
+<h2 id="dividir-un-entorno-de-aplicación-en-múltiples-stacks-tiers">Dividir un entorno de aplicación en múltiples stacks / tiers</h2>
+
+<p><img src="https://docs.google.com/drawings/d/1SZbMk-rkibmzWa0wrhQUDHtfhf2-2vX9pg2SVKb7yjs/pub?w=889&h=553" style="width:50%;"></p>
+
+</section><section>
+
+<h2 id="compartir-stacks-entre-aplicaciones">Compartir stacks entre aplicaciones</h2>
+
+<p><img src="https://docs.google.com/drawings/d/1rS92zQzceYIWsLoR-FSYa9Qucv05MHS-kd1pyDOfxsM/pub?w=686&amp;h=741" alt="" />{ width=50% }
+<img src="https://docs.google.com/drawings/d/1rS92zQzceYIWsLoR-FSYa9Qucv05MHS-kd1pyDOfxsM/pub?w=686&h=741" style="width:50%;"></p>
+
+</section><section>
+
+<h2 id="microservicios">Microservicios</h2>
+
+<p><img src="https://docs.google.com/drawings/d/16q-IsZ2Sr_rm56fDHpkuq51TRT_TeXVekb3mgUzCzXU/pub?w=675&h=705" style="width:50%;"></p>
+
+</section><section>
+
+<h2 id="entornos">Entornos</h2>
+
+<ul>
+<li><p><strong>Despliegues/&ldquo;instancias&rdquo; de un mismo stack(s) y servicio</strong>, para propósitos como el testing</p>
+
+<ul>
+<li>Por ejemplo: Desarrollo, Pre-producción y Producción</li>
+<li>Misma infraestructura con diferente dimensionamiento o particularidades de configuración</li>
+<li>También para sandboxing o &ldquo;plataformas dedicadas&rdquo; a propósitos/clientes
+<br /></li>
+</ul></li>
+
+<li><p><strong>Mantener múltiples entornos de forma consistente</strong> siempre ha sido un reto&hellip;</p>
+
+<ul>
+<li>&hellip;pero definir la infraestructura como código nos lo facilita</li>
+</ul></li>
+</ul>
+
+<blockquote>
+<p><strong>NADA</strong> debe quedar fuera de la definición como código!</p>
+</blockquote>
+
+</section><section>
+
+<h2 id="reusando-ficheros-de-definición">Reusando ficheros de definición</h2>
+
+<ul>
+<li>Para mantener la consistencia, debemos tener un <strong>único fichero de definición de stack</strong></li>
+<li>Cada entorno se <strong>personaliza con parámetros de entorno</strong></li>
+<li>Ejemplo:</li>
+</ul>
+
+<pre><code class="language-terraform">variable &quot;environment&quot; {}
+resource &quot;aws_instance&quot; &quot;web_server_1&quot; {
+    instance_type = &quot;t2.micro&quot;
+    tags {
+        Enviroment = &quot;${var.environment}&quot;
+}
+</code></pre>
+
+</section><section>
+
+<h2 id="ventajas-de-la-parametrización">Ventajas de la parametrización</h2>
+
+<ul>
+<li><strong>Verificar</strong> completamente la infraestructura antes de producción</li>
+<li>Facilita el <strong>self-service</strong></li>
+<li><strong>Evita la duplicidad</strong> de código</li>
+<li><strong>Mejora la adaptabilidad</strong> del stack ante futuros cambios</li>
+</ul>
+
+</section><section>
+
+<h2 id="como-definir-infraestructura-como-código">Como definir infraestructura como código</h2>
+
+<p>Esta definición se especifica en ficheros de configuración y
+diferentes herramientas se encargan de provisionar, modificar o eliminar
+los elementos en base a esa definición</p>
+
+</section><section>
+
+<h2 id="evolución-de-la-infrastructura-como-código">Evolución de la Infrastructura como código</h2>
+
+</section>
+
+<section data-shortcode-section>
+<h2 id="the-aws-journey">The AWS journey</h2>
+
+</section><section>
+
+<h2 id="api-calls">API calls</h2>
+
+<pre><code class="language-python">import boto3
+
+s3 = boto3.client('s3')
+bucket_name = 'my-bucket'
+s3.create_bucket(bucket_name)
+filename = 'file.txt'
+s3.upload_file(filename, bucket_name, filename)
+</code></pre>
+
+</section><section>
+
+<h2 id="cloudformation">Cloudformation</h2>
+
+<pre><code class="language-json">{
+    &quot;AWSTemplateFormatVersion&quot;: &quot;2010-09-09&quot;,
+    &quot;Resources&quot;: {
+        &quot;S3Bucket&quot;: {
+            &quot;Type&quot;: &quot;AWS::S3::Bucket&quot;
+        },
+    },
+    &quot;Outputs&quot;: {
+        &quot;S3BucketSecureURL&quot;: {
+            &quot;Value&quot;: {
+                &quot;Fn::Join&quot;: [
+                    &quot;&quot;,
+                    [
+                        &quot;https://&quot;,
+                        {
+                            &quot;Fn::GetAtt&quot;: [
+                                &quot;S3Bucket&quot;,
+                                &quot;DomainName&quot;
+                            ]
+                        }
+                    ]
+                ]
+            },
+            &quot;Description&quot;: &quot;Name of S3 bucket&quot;
+        }
+    }
+}
+</code></pre>
+
+</section><section>
+
+<h2 id="troposphere">Troposphere</h2>
+
+<pre><code class="language-python">from troposphere
+import Output, Ref, Template
+from troposphere.s3
+import Bucket, PublicRead
+
+t = Template()
+
+t.add_description(
+  &quot;AWS CloudFormation Sample Template”
+
+s3bucket = t.add_resource(Bucket(&quot;S3Bucket&quot;, AccessControl = PublicRead, ))
+
+t.add_output(Output(
+  &quot;BucketName&quot;,
+  Value = Ref(s3bucket),
+  Description = &quot;Name of S3 bucket to hold website content&quot;
+))
+
+print(t.to_json())
+</code></pre>
+
+</section><section>
+
+<h2 id="sceptre">Sceptre</h2>
+
+<pre><code class="language-bash">$ sceptre create dev/vpc.yaml
+
+dev/vpc - Creating stack dev/vpc
+VirtualPrivateCloud AWS::EC2::VPC CREATE_IN_PROGRESS
+dev/vpc VirtualPrivateCloud AWS::EC2::VPC CREATE_COMPLETE
+dev/vpc sceptre-demo-dev-vpc AWS::CloudFormation::Stack CREATE_COMPLETE
+</code></pre>
+
+</section><section>
+
+<h2 id="aws-cdk">AWS CDK</h2>
+
+<p>Amazon Cloud Development Kit</p>
+
+<pre><code class="language-python">from aws_cdk import (
+    aws_s3 as s3,
+    cdk
+)
+
+bucket = s3.Bucket(self, 
+    &quot;MyFirstBucket&quot;, 
+    versioned=True,
+    encryption=s3.BucketEncryption.KmsManaged,)
+</code></pre>
+
+<p><span class='fragment '
+  >
+  <em>troposphere, but multilanguage?</em>
+</span></p>
+
+</section><section>
+
+<p><strong>Summarizing (some) AWS IaC options</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th align="center">Declarative?</th>
+<th align="center">Deployment/Update tool?</th>
+<th align="center">Config-driven</th>
+<th align="center">Programmatic</th>
+<th align="center">Language</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>AWS API</td>
+<td align="center">N</td>
+<td align="center">N</td>
+<td align="center">N</td>
+<td align="center">Y</td>
+<td align="center">N/A</td>
+</tr>
+
+<tr>
+<td>Cloudformation</td>
+<td align="center">Y</td>
+<td align="center">More or less</td>
+<td align="center">Y</td>
+<td align="center">N</td>
+<td align="center">JSON/YAML</td>
+</tr>
+
+<tr>
+<td>Troposphere</td>
+<td align="center">Y</td>
+<td align="center">N</td>
+<td align="center">N</td>
+<td align="center">Y</td>
+<td align="center">Python</td>
+</tr>
+
+<tr>
+<td>Sceptre</td>
+<td align="center">N/A</td>
+<td align="center">Y</td>
+<td align="center">N/A</td>
+<td align="center">N/A</td>
+<td align="center">N/A</td>
+</tr>
+
+<tr>
+<td>CDK</td>
+<td align="center">Y</td>
+<td align="center">Y</td>
+<td align="center">N</td>
+<td align="center">Y</td>
+<td align="center">*</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+
+</section><section>
+
+<section data-shortcode-section>
+<h2 id="multicloud">Multicloud</h2>
+
+</section><section>
+
+<h2 id="terraform-v11">Terraform(-v11)</h2>
+
+<pre><code class="language-hcl">provider &quot;aws&quot; {
+  region = &quot;us-west-2&quot;
+}
+
+resource &quot;aws_s3_bucket&quot; &quot;example&quot; {
+  bucket = &quot;my-test-s3-terraform-bucket&quot;
+  acl = &quot;private&quot;
+  versioning {
+    enabled = true
+  }
+
+  tags {
+    Name = &quot;my-test-s3-terraform-bucket&quot;
+  }
+}
+</code></pre>
+
+</section><section>
+
+<h2 id="terrascript-terraform-v12">Terrascript (+Terraform-v12)</h2>
+
+<pre><code class="language-python">from terrascript import Terrascript, provider
+from terrascript.aws.r import aws_instance
+
+ts = Terrascript()
+
+# Add a provider (+= syntax)
+ts += provider('aws', access_key='ACCESS_KEY_HERE',
+               secret_key='SECRET_KEY_HERE', region='us-east-1')
+
+# Add an AWS EC2 instance (add() syntax).
+inst = ts.add(aws_instance('example', ami='ami-2757f631', instance_type='t2.micro'))
+
+# Print the JSON-style configuration to stdout.
+print(ts.dump())
+</code></pre>
+
+</section><section>
+
+<h2 id="pulumi">Pulumi</h2>
+
+<pre><code class="language-go">package main
+import (
+    &quot;github.com/pulumi/pulumi-gcp/sdk/go/gcp/storage&quot;
+    &quot;github.com/pulumi/pulumi/sdk/go/pulumi&quot;
+)
+
+func main() {
+    pulumi.Run(func(ctx *pulumi.Context) error {
+        // NewBucket already adds a random suffix
+        bucket, err := storage.NewBucket(ctx, &quot;pulumi-bucket&quot;, &amp;storage.BucketArgs{
+            Location: &quot;EU&quot;,
+            })
+        if err != nil {
+            return err
+        }
+        ctx.Export(&quot;bucketName&quot;, bucket.ID())
+        ctx.Export(&quot;websiteUrl&quot;, bucket.Url())
+        return nil
+    })
+}
+</code></pre>
+
+</section><section>
+
+<p><strong>Multicloud IaC options summary</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th align="center">Declarative?</th>
+<th align="center">Deployment/Update tool?</th>
+<th align="center">Config-driven</th>
+<th align="center">Programmatic</th>
+<th align="center">Language</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Terraform</td>
+<td align="center">Y</td>
+<td align="center">Y</td>
+<td align="center">Y</td>
+<td align="center">N</td>
+<td align="center">HCL, JSON(v12)</td>
+</tr>
+
+<tr>
+<td>Terrascript</td>
+<td align="center">Y</td>
+<td align="center">N</td>
+<td align="center">N</td>
+<td align="center">Y</td>
+<td align="center">Python</td>
+</tr>
+
+<tr>
+<td>Pulumi</td>
+<td align="center">Y</td>
+<td align="center">Y</td>
+<td align="center">N</td>
+<td align="center">Y</td>
+<td align="center">*</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+</section>
+
+</div>
+      
+
+    </div>
+<script type="text/javascript" src=/devops-training/reveal-hugo/object-assign.js></script>
+
+<a href="/devops-training/reveal-js/css/print/" id="print-location" style="display: none;"></a>
+<script type="text/javascript">
+  var printLocationElement = document.getElementById('print-location');
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = printLocationElement.href + (window.location.search.match(/print-pdf/gi) ? 'pdf.css' : 'paper.css');
+  document.getElementsByTagName('head')[0].appendChild(link);
+</script>
+
+<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom.css","slide_number":true}</script>
+<script type="application/json" id="reveal-hugo-page-params">{"templates":{"subtitle":{"background":"#f7cbbf","class":"subtitle"},"title":{"background":"#4d163b","class":"title"}}}</script>
+
+<script src="/devops-training/reveal-js/lib/js/head.min.js"></script>
+<script src="/devops-training/reveal-js/js/reveal.js"></script>
+
+<script type="text/javascript">
+  
+  
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+  
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
+  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams));
+  Reveal.initialize(options);
+</script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/lib/js/classList.js"></script>
+
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/markdown/marked.js"></script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/markdown/markdown.js"></script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/highlight/highlight.js"></script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/zoom-js/zoom.js"></script>
+
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/notes/notes.js"></script>
+
+
+
+<script type="text/javascript">
+if (hljs)
+  hljs.initHighlightingOnLoad();
+</script>
+    
+    
+  </body>
+</html>

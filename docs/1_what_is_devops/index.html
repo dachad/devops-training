@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>Infrastructure as Code or Infrastructure as Configuration?</title>
+
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/devops-training/reveal-js/css/reveal.css"><link rel="stylesheet" href="/devops-training/custom.css" id="theme"><link rel="stylesheet" href="/devops-training/highlight-js/default.min.css">
+    
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+  
+
+
+
+<section data-noprocess data-shortcode-slide
+    data-background="#4d163b"
+    class="title"
+    data-template="title"
+      data-background-image="images/Title.png">
+  
+
+<h1 id="qué-es-devops">Qué es DevOps?</h1>
+
+<table>
+<thead>
+<tr>
+<th></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Operaciones vs Desarrollo</td>
+</tr>
+
+<tr>
+<td>Porque es conveniente?</td>
+</tr>
+
+<tr>
+<td>DevOps vs SRE</td>
+</tr>
+</tbody>
+</table>
+</section>
+
+  
+<section data-shortcode-section>
+<p><section data-noprocess data-shortcode-slide
+    data-background="#f7cbbf"
+    class="subtitle"
+    data-template="subtitle"></p>
+
+<h2 id="devops-la-aproximación-swe-es-la-vencedora">Devops: La aproximación SWE es la vencedora</h2>
+
+<p><img src="https://pbs.twimg.com/media/B7ukz2YIMAEZ-if.jpg" alt="" /></p>
+
+</section><section>
+
+<h2 id="pero-qué-es-devops">¿Pero qué es Devops?</h2>
+
+<p>Devops es una suma de cultura, prácticas, herramientas, etc.</p>
+
+<p>Propósito: <strong>Operaciones como un componente más del desarrollo ágil de las aplicaciones</strong></p>
+
+<blockquote>
+<p>No implica roles específicos; es &ldquo;una forma de hacer&rdquo;</p>
+</blockquote>
+
+</section><section>
+
+<h2 id="y-por-qué-esa-visión-se-impone">¿Y por qué esa visión se impone?</h2>
+
+<ul>
+<li><strong>El código está más cerca del negocio</strong>; la aplicación/funcionalidad es lo que realmente se consume del catálogo IT; el código es un &ldquo;first-class citizen&rdquo;</li>
+<li>La oferta Cloud y las metodologías &ldquo;dominantes&rdquo; han permitido que los <strong>Ingenieros Software puedan ser autónomos</strong></li>
+<li>Plena <strong>automatización (apoyada en código)</strong> de Sistemas / Arquitecturas / Tecnologías Cloud hacen más rápidas, seguras y mantenibles las soluciones IT
+
+<ul>
+<li>Experiencia en desarrollo para mantener dichas bases pasa a ser fundamental</li>
+</ul></li>
+<li>Cualquier aproximación heredada del mundo &ldquo;bipolar&rdquo;, que asuma la existencia de &ldquo;dos mundos&rdquo; dentro de una corporación, o que introduzca operaciones &ldquo;one time&rdquo; (no importa que sea a través de la mejor de las herramientas Self-Service) deja de ser bienvenida</li>
+<li>La aproximación ya ha sido usada por líderes tecnológicos, con éxito</li>
+</ul>
+
+</section><section>
+
+<h2 id="devops-rompiendo-silos">DevOps, rompiendo silos</h2>
+
+<p><img src="http://cdn.edureka.co/blog/wp-content/uploads/2014/12/Devops_03.png" alt="" /></p>
+
+</section><section>
+
+<h2 id="devops-culture-vs-role">DevOps culture vs role</h2>
+
+<p><img src="https://img.scoop.it/wYv5lL3VjySbSccKGHHBMDl72eJkfbmt4t8yenImKBVvK0kTmF0xjctABnaLJIm9" alt="" /></p>
+
+</section><section>
+
+<h2 id="devops-culture-vs-role-2">DevOps culture vs role (2)</h2>
+
+<p><img src="https://imgs.xkcd.com/comics/tools.png" style="width:140%;"></p>
+
+</section>
+</section><section data-shortcode-section>
+<p><section data-noprocess data-shortcode-slide
+    data-background="#f7cbbf"
+    class="subtitle"
+    data-template="subtitle"></p>
+
+<h2 id="algunos-gráficos-que-dan-para-pensar">Algunos gráficos que dan para pensar</h2>
+
+<p><img src="https://cdn.pixabay.com/photo/2015/11/20/06/27/isolated-1052504_960_720.png" style="width:60%;"></p>
+
+</section><section>
+
+<h2 id="servidores">Servidores</h2>
+
+</section><section>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Internet_Hosts_Count_log.svg/800px-Internet_Hosts_Count_log.svg.png" alt="" /></p>
+
+</section><section>
+
+<p><img src="https://news.netcraft.com/wp-content/uploads/2011/03/wpid-site_count_history.png" style="width:140%;"></p>
+
+</section><section>
+
+<p><img src="https://www.infragistics.com/community/cfs-filesystemfile.ashx/__key/CommunityServer.Blogs.Components.WeblogFiles/mobileman/3463.data_2D00_growth_2D00_big_2D00_data.png" style="width:120%;"></p>
+
+</section><section>
+
+<h2 id="y-ahora-los-que-más-me-asustan-de-verdad-clientes">Y ahora los que más me asustan de verdad&hellip; clientes</h2>
+
+</section><section>
+
+<p><img src="https://whatsthebigdata.files.wordpress.com/2012/08/pc_phone_tablet_1975-20111.png" alt="" /></p>
+
+</section><section>
+
+<p><img src="https://www.cisco.com/c/dam/en_us/about/security/images/csc_child_pages/white_papers/iot-figure1.jpg" alt="" /></p>
+
+</section><section>
+
+<p><img src="../images/GOTW_3_30_14.png" style="width:100%;"></p>
+
+</section><section>
+
+<h2 id="actuar-como-google-es-hype-o-necesidad">¿Actuar como &ldquo;Google&rdquo; es hype o necesidad?</h2>
+
+<p><img src="http://static2.businessinsider.com/image/57226f7152bcd066018bfb6f-1190-625/5-reasons-google-is-the-best-place-to-work-in-america-and-no-other-company-can-touch-it.jpg" alt="" /></p>
+
+</section>
+</section><section data-shortcode-section>
+<p><section data-noprocess data-shortcode-slide
+    data-background="#f7cbbf"
+    class="subtitle"
+    data-template="subtitle"></p>
+
+<h2 id="un-nuevo-rol-sre-site-reliability-engineer">Un nuevo rol: SRE (Site Reliability Engineer)</h2>
+
+<blockquote>
+<p>&ldquo;what happens when a software engineer is tasked with what used to be called operations&rdquo;, Ben Treynor</p>
+</blockquote>
+
+<ul>
+<li>Su foco es garantizar un nivel de fiabilidad y escalabilidad a las aplicaciones</li>
+<li>El rol ideal seria un software engineer con conocimientos de sistemas y redes</li>
+<li>Deben balancear su trabajo entre responder a emergencias y construir sistemas que minimizan los problemas</li>
+<li>A diferencia de Operaciones, los SREs pueden modificar el código de las aplicaciones</li>
+<li>También es su responsabilidad validar que una aplicación tiene la &ldquo;calidad&rdquo; suficiente para pasar a producción</li>
+</ul>
+
+</section>
+</section>
+
+</div>
+      
+
+    </div>
+<script type="text/javascript" src=/devops-training/reveal-hugo/object-assign.js></script>
+
+<a href="/devops-training/reveal-js/css/print/" id="print-location" style="display: none;"></a>
+<script type="text/javascript">
+  var printLocationElement = document.getElementById('print-location');
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = printLocationElement.href + (window.location.search.match(/print-pdf/gi) ? 'pdf.css' : 'paper.css');
+  document.getElementsByTagName('head')[0].appendChild(link);
+</script>
+
+<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom.css","slide_number":true}</script>
+<script type="application/json" id="reveal-hugo-page-params">{"templates":{"subtitle":{"background":"#f7cbbf","class":"subtitle"},"title":{"background":"#4d163b","class":"title"}}}</script>
+
+<script src="/devops-training/reveal-js/lib/js/head.min.js"></script>
+<script src="/devops-training/reveal-js/js/reveal.js"></script>
+
+<script type="text/javascript">
+  
+  
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+  
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
+  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams));
+  Reveal.initialize(options);
+</script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/lib/js/classList.js"></script>
+
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/markdown/marked.js"></script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/markdown/markdown.js"></script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/highlight/highlight.js"></script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/zoom-js/zoom.js"></script>
+
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/notes/notes.js"></script>
+
+
+
+<script type="text/javascript">
+if (hljs)
+  hljs.initHighlightingOnLoad();
+</script>
+    
+    
+  </body>
+</html>

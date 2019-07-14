@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>Infrastructure as Code or Infrastructure as Configuration?</title>
+
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/devops-training/reveal-js/css/reveal.css"><link rel="stylesheet" href="/devops-training/custom.css" id="theme"><link rel="stylesheet" href="/devops-training/highlight-js/default.min.css">
+    
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+  
+
+
+
+<section data-noprocess data-shortcode-slide
+    data-background="#4d163b"
+    class="title"
+    data-template="title"
+      data-background-image="images/Title.png">
+  
+
+<h1 id="práctica-a-ansible">Práctica A: Ansible</h1>
+</section>
+
+  
+<section data-shortcode-section>
+<p><section data-noprocess data-shortcode-slide
+    data-background="#f7cbbf"
+    class="subtitle"
+    data-template="subtitle"></p>
+
+<h2 id="objetivo">Objetivo</h2>
+
+<ul>
+<li>Automatizar la provisión de configuración en un entorno de producción hetereogéneo</li>
+</ul>
+
+<p><img src="https://docs.google.com/drawings/d/e/2PACX-1vRayY8-4P6lGt8PuKOs0N4kBeSiubcpWrpvzDyORn5dGAOXTUEn1-_rsQNT8z34-mfHcQy9iaa49aOi/pub?w=558&amp;h=411" alt="" /></p>
+
+</section><section>
+
+<h2 id="prepararemos-el-escenario">Prepararemos el escenario</h2>
+
+<p>En el directorio <strong>lab3</strong>, ejecutamos <strong>vagrant up</strong> para levantar el escenario del laboratorio.</p>
+
+<p>Accedamos al servidor <strong>MGMT</strong> (<strong>vagrant ssh mgmt</strong>) y nos movemos al directorio /vagrant desde donde ejecutaremos Ansible para desplegar la configuración vía red de gestión fuera de banda.</p>
+
+<p>Podemos validar que existe conectividad entre los equipos de la red 192.168.0.0/24</p>
+
+</section>
+</section><section data-shortcode-section>
+<p><section data-noprocess data-shortcode-slide
+    data-background="#f7cbbf"
+    class="subtitle"
+    data-template="subtitle"></p>
+
+<h2 id="arquitectura-ansible">Arquitectura Ansible</h2>
+
+<p><img src="https://d1jnx9ba8s6j9r.cloudfront.net/blog/wp-content/uploads/2016/11/Ansible-Architechture-What-Is-Ansible-Edureka.png" alt="" />{ width=60% }</p>
+
+<ul>
+<li><p>Automatización de servidores</p>
+
+<ul>
+<li>Ejecución <strong>distribuida</strong></li>
+<li>Se <strong>copia</strong> via SSH el código Python y se <strong>ejecuta</strong> en cada equipo</li>
+</ul></li>
+
+<li><p>Automatización de equipos de red</p>
+
+<ul>
+<li>Ejecución <strong>centralizada</strong></li>
+<li>Se <strong>ejecuta</strong> el código python en local y se accede a los equipos vi SNMP, SSH o mediante APIs
+&mdash;</li>
+</ul></li>
+</ul>
+
+<h2 id="fichero-de-inventario">Fichero de inventario</h2>
+
+<blockquote>
+<p>Contiene los equipos (por IP o FQDN) que serán automatizados (y sus variables asociadas)</p>
+</blockquote>
+
+<ul>
+<li><strong>/etc/ansible/hosts</strong></li>
+<li>ANSIBLE_INVENTORY</li>
+
+<li><p>-i, &ndash;inventory-file</p>
+
+<pre><code>[routers]
+router
+
+[servers]
+server01
+server02
+
+[servers:vars]
+dns_server=1.1.1.1
+</code></pre></li>
+</ul>
+
+</section><section>
+
+<h2 id="ejecutando-un-playbook">Ejecutando un Playbook</h2>
+
+<blockquote>
+<p><strong>Playbook</strong> es un fichero que continene las instrucciones de automatización</p>
+</blockquote>
+
+<pre><code class="language-yaml">---
+    - name: PLAY 1 - Configure Interface Speed
+      hosts: barcelona-dc
+      connection: local
+      gather_facts: no
+
+      tasks:
+        - name: TASK1 - Get interface information
+          ios_command:
+            commands:
+                - show run | include interfaces
+            provider:
+                username: myusername
+                password: mypassword
+                host: &quot;{{ inventory_hostname }}&quot;
+</code></pre>
+
+</section>
+</section><section data-shortcode-section>
+<p><section data-noprocess data-shortcode-slide
+    data-background="#f7cbbf"
+    class="subtitle"
+    data-template="subtitle"></p>
+
+<h2 id="hands-on">Hands-on</h2>
+
+</section><section>
+
+<h2 id="ejecución-de-playbooks-en-el-laboratorio">Ejecución de playbooks en el laboratorio</h2>
+
+<blockquote>
+<p>export ANSIBLE_HOST_KEY_CHECKING=False &amp;&amp; <strong>ansible-playbook -i inventory.cfg playbooks/nombre_playbook.yml</strong></p>
+</blockquote>
+
+</section><section>
+
+<h2 id="recogemos-datos-1">Recogemos datos (1)</h2>
+
+<blockquote>
+<p><strong>play_recoger_datos.yml</strong></p>
+</blockquote>
+
+<pre><code class="language-yaml">---
+- name: PLAY 1 - Recoger datos basicos de los routers
+  hosts: routers
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Recoger datos de cada router
+      vyos_facts:
+        provider: &quot;{{ base_provider }}&quot;
+    - name: Visualizar el tipo de equipo remoto
+      debug:
+        var: ansible_net_version
+... # Continua en la siguiente slide
+</code></pre>
+
+</section><section>
+
+<h2 id="recogemos-datos-2">Recogemos datos (2)</h2>
+
+<pre><code class="language-yaml">... # Continua del anterior
+- name: PLAY 2 - Recoger datos basicos de los servidores
+  hosts: servers
+  tasks:
+    - name: Visualizar el sistema operativo
+      debug:
+        var: ansible_distribution
+    - name: Visualizar la version del SO
+      debug:
+        var: ansible_distribution_version  
+</code></pre>
+
+</section><section>
+
+<h2 id="trucos">Trucos</h2>
+
+<blockquote>
+<p>Ejecutando en modo &ldquo;Verbose&rdquo; con -v nos mostrará toda la salida (equivale a un &ldquo;debug&rdquo; para toda la respuesta)</p>
+
+<p><strong>ansible-docs</strong> es vuestro amigo para entender los diferentes módulos</p>
+</blockquote>
+
+</section><section>
+
+<h2 id="validemos-que-no-existe-conectividad">Validemos que no existe conectividad</h2>
+
+<p>Los dos Servidores pertenecen a redes diferentes y el Router todavía no está configurado.</p>
+
+<blockquote>
+<p><strong>play_validar_conectividad.yml</strong> (-v para ver más detalle)</p>
+</blockquote>
+
+<pre><code class="language-yaml">---
+- name: PLAY 1 - Validar que los servidores pueden comunicarse via ICMP
+  hosts: servers
+  tasks:
+    - name: ICMP hacia el SERVER01
+      command: ping -c 2 &quot;{{ server01_ip }}&quot;
+      ignore_errors: yes
+    - name: ICMP hacia el SERVER02
+      command: ping -c 2 &quot;{{ server02_ip }}&quot;
+      ignore_errors: yes    
+</code></pre>
+
+</section><section>
+
+<h2 id="de-dónde-salen-las-variables">¿de dónde salen las variables?</h2>
+
+<ol>
+<li>En el fichero de Inventory</li>
+<li>-e / &ndash;extra-vars &ldquo;var1=1 var2=2&rdquo;</li>
+<li>En el playbook (facts)</li>
+<li>En el directorio <strong>group_vars</strong></li>
+<li>En el directorio <strong>host_vars</strong></li>
+</ol>
+
+</section><section>
+
+<h2 id="configuramos-el-router">Configuramos el router</h2>
+
+</section><section>
+
+<h2 id="variables-y-templates">Variables y Templates</h2>
+
+<p>En <strong>host_vars</strong>/<strong>router.yml</strong></p>
+
+<pre><code class="language-yaml">---
+interfaces:
+  - name: &quot;eth2&quot;
+    ip: &quot;10.10.0.1&quot;
+    mask: &quot;24&quot;
+  - name: &quot;eth3&quot;
+    ip: &quot;10.20.0.1&quot;
+    mask: &quot;24&quot;
+</code></pre>
+
+<p>En playbooks/<strong>templates</strong>/interfaces/vyos.j2</p>
+
+<pre><code class="language-jinja">{% for interface in interfaces %}
+set interfaces ethernet {{ interface.name }} address {{ interface.ip }}/{{ interface.mask }}
+{% endfor %}
+</code></pre>
+
+</section><section>
+
+<h2 id="generamos-el-template-de-configuración-y-aplicamos">Generamos el template de configuración y aplicamos</h2>
+
+<blockquote>
+<p><strong>play_configurar_router.yml</strong></p>
+</blockquote>
+
+<pre><code class="language-yaml">---
+- name: PLAY 1 - Aplicar configuracion sobre las interfaces
+  hosts: router
+  connection: local
+  gather_facts: no
+  tasks:
+  - name: Generar fichero de configuracion
+    template:
+      src: &quot;./interfaces/{{ os }}.j2&quot;
+      dest: &quot;./configs/{{ inventory_hostname }}.cfg&quot;  
+  - name: Cargar configuracion de vyos
+    vyos_config:
+      src: &quot;./configs/{{ inventory_hostname }}.cfg&quot;
+      provider: &quot;{{ base_provider }}&quot;
+
+</code></pre>
+
+</section><section>
+
+<h2 id="ya-tenemos-el-router-a-punto">Ya tenemos el router a punto!</h2>
+
+<pre><code> vagrant ssh router
+Linux vyos 3.13.11-1-amd64-vyos #1 SMP Wed Aug 12 02:08:05 UTC 2015 x86_64
+Welcome to VyOS.
+This system is open-source software. The exact distribution terms for
+each module comprising the full system are described in the individual
+files in /usr/share/doc/*/copyright.
+Last login: Sun May 27 15:18:46 2018 from 192.168.0.200
+
+vagrant@router:~$ sh interfaces
+Codes: S - State, L - Link, u - Up, D - Down, A - Admin Down
+Interface        IP Address                        S/L  Description
+---------        ----------                        ---  -----------
+eth0             10.0.2.15/24                      u/u
+eth1             192.168.0.3/24                    u/u
+eth2             10.10.0.1/24                      u/u
+eth3             10.20.0.1/24                      u/u
+lo               127.0.0.1/8                       u/u
+                 ::1/128
+</code></pre>
+
+</section><section>
+
+<h2 id="y-de-paso-un-backup-de-configuración">Y de paso, un backup de configuración</h2>
+
+<pre><code>cat lab3/playbooks/configs/router.cfg
+
+set interfaces ethernet eth2 address 10.10.0.1/24
+set interfaces ethernet eth3 address 10.20.0.1/24
+</code></pre>
+
+</section><section>
+
+<h2 id="probamos-la-connectividad">Probamos la connectividad</h2>
+
+<pre><code>vagrant@router:~$ ping 10.10.0.100
+PING 10.10.0.100 (10.10.0.100) 56(84) bytes of data.
+64 bytes from 10.10.0.100: icmp_req=1 ttl=64 time=0.798 ms
+^C
+--- 10.10.0.100 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.798/0.798/0.798/0.000 ms
+
+vagrant@router:~$ ping 10.20.0.101
+PING 10.20.0.101 (10.20.0.101) 56(84) bytes of data.
+64 bytes from 10.20.0.101: icmp_req=1 ttl=64 time=1.04 ms
+^C
+--- 10.20.0.101 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 0.304/0.672/1.041/0.369 ms
+</code></pre>
+
+</section><section>
+
+<h2 id="volvemos-a-validar-la-connectividad-desde-los-servidores">Volvemos a validar la connectividad desde los servidores&hellip;</h2>
+
+<blockquote>
+<p><strong>No funciona :(</strong></p>
+</blockquote>
+
+</section><section>
+
+<h2 id="configuramos-los-servidores">Configuramos los servidores</h2>
+
+</section><section>
+
+<h2 id="añadimos-las-rutas-ip-en-los-servidores-1">Añadimos las rutas IP en los servidores (1)</h2>
+
+<p>En <strong>host_vars/server01.yml</strong> y <strong>host_vars/server02.yml</strong></p>
+
+<pre><code class="language-yaml">---
+routes:
+  - destination: &quot;10.20.0.0/24&quot;
+    next_hop: &quot;10.10.0.1&quot;
+---
+routes:
+  - destination: &quot;10.10.0.0/24&quot;
+    next_hop: &quot;10.20.0.1&quot;
+</code></pre>
+
+</section><section>
+
+<h2 id="añadimos-las-rutas-ip-en-los-servidores-2">Añadimos las rutas IP en los servidores (2)</h2>
+
+<blockquote>
+<p><strong>play_server_iproute.yml</strong></p>
+</blockquote>
+
+<pre><code class="language-yaml">---    
+- name: PLAY 1 - Configurar las rutas en los servidores comunicarse via ICMP
+  hosts: servers
+  tasks:
+    - name: Añadimos rutas IP
+      command: ip route add {{ item.destination }} via {{ item.next_hop }}
+      with_items: &quot;{{ routes }}&quot;
+      become: yes
+      become_user: root
+</code></pre>
+
+</section><section>
+
+<h2 id="ahora-sí">Ahora sí!!</h2>
+
+</section>
+</section><section data-shortcode-section>
+<p><section data-noprocess data-shortcode-slide
+    data-background="#f7cbbf"
+    class="subtitle"
+    data-template="subtitle"></p>
+
+<h2 id="extendamos-el-laboratorio">Extendamos el laboratorio</h2>
+
+<h2 id="objectivo-instalar-un-servidor-http-mediante-el-uso-de-roles">Objectivo: Instalar un servidor HTTP mediante el uso de roles</h2>
+
+<h2 id="roles">Roles</h2>
+
+<pre><code>.
+|-- apache
+|   |-- files
+|   |   |-- httpd.conf
+|   |   |-- index.html
+|   |   `-- ports.conf
+|   |-- handlers
+|   |   `-- main.yml
+|   `-- tasks
+|       |-- configure.yml
+|       |-- install.yml
+|       |-- main.yml
+|       `-- service.yml
+`-- common
+    |-- defaults
+    |   `-- main.yml
+    |-- handlers
+    |   `-- main.yml
+    |-- tasks
+    |   `-- main.yml
+    `-- templates
+        `-- default.j2
+</code></pre>
+
+</section><section>
+
+<h2 id="playbook">Playbook</h2>
+
+<blockquote>
+<p><strong>play_role_server.yml</strong></p>
+</blockquote>
+
+<pre><code class="language-yaml">---    
+- name: PLAY 1 - Configurar el server01 como servidor web
+  hosts: server01
+  roles:
+    - common
+    - apache
+</code></pre>
+
+<p>Cada role incluye un conjunto de tareas con su configuración específica que puede combinarse</p>
+
+<ul>
+<li><strong>common</strong>: Configuración base para todos los servidores</li>
+<li><strong>apache</strong>: Configuración específica para los servidores web
+&mdash;</li>
+</ul>
+
+<h2 id="validamos-desde-el-server02">Validamos desde el server02</h2>
+
+<pre><code>% vagrant ssh server02
+% curl http://10.10.0.100:8010
+Página HTMl para el curso de DevOps
+</code></pre>
+
+<p>Podemos comprobar que hemos utilizado la página web del curso y que se está escuchando en el puerto 8010</p>
+
+</section>
+</section>
+
+</div>
+      
+
+    </div>
+<script type="text/javascript" src=/devops-training/reveal-hugo/object-assign.js></script>
+
+<a href="/devops-training/reveal-js/css/print/" id="print-location" style="display: none;"></a>
+<script type="text/javascript">
+  var printLocationElement = document.getElementById('print-location');
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = printLocationElement.href + (window.location.search.match(/print-pdf/gi) ? 'pdf.css' : 'paper.css');
+  document.getElementsByTagName('head')[0].appendChild(link);
+</script>
+
+<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom.css","slide_number":true}</script>
+<script type="application/json" id="reveal-hugo-page-params">{"templates":{"subtitle":{"background":"#f7cbbf","class":"subtitle"},"title":{"background":"#4d163b","class":"title"}}}</script>
+
+<script src="/devops-training/reveal-js/lib/js/head.min.js"></script>
+<script src="/devops-training/reveal-js/js/reveal.js"></script>
+
+<script type="text/javascript">
+  
+  
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+  
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
+  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams));
+  Reveal.initialize(options);
+</script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/lib/js/classList.js"></script>
+
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/markdown/marked.js"></script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/markdown/markdown.js"></script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/highlight/highlight.js"></script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/zoom-js/zoom.js"></script>
+
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/notes/notes.js"></script>
+
+
+
+<script type="text/javascript">
+if (hljs)
+  hljs.initHighlightingOnLoad();
+</script>
+    
+    
+  </body>
+</html>

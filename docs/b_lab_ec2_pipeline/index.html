@@ -1,0 +1,1109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>Infrastructure as Code or Infrastructure as Configuration?</title>
+
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/devops-training/reveal-js/css/reveal.css"><link rel="stylesheet" href="/devops-training/custom.css" id="theme"><link rel="stylesheet" href="/devops-training/highlight-js/default.min.css">
+    
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+  
+
+
+
+<section data-noprocess data-shortcode-slide
+    data-background="#4d163b"
+    class="title"
+    data-template="title"
+      data-background-image="images/Title.png">
+  
+
+<h1 id="práctica-b-despliegue-en-aws-con-pipeline-automática">Práctica B: Despliegue en AWS con pipeline automática</h1>
+</section>
+
+  
+<section data-shortcode-section>
+<p><section data-noprocess data-shortcode-slide
+    data-background="#f7cbbf"
+    class="subtitle"
+    data-template="subtitle"></p>
+
+<h1 id="práctica-1-del-código-al-cloud-provider">Práctica 1: Del código al Cloud Provider</h1>
+
+</section><section>
+
+<h2 id="objetivo">Objetivo</h2>
+
+<p><img src="https://docs.google.com/drawings/d/128ap-RQGC6z89dZ6Jg379V2-O2uKiNvfLzlV0ZEdZR0/pub?w=960&amp;h=720" alt="" /></p>
+
+</section><section>
+
+<h2 id="primera-parte-preparación-del-entorno-virtual">Primera parte: Preparación del entorno virtual</h2>
+
+<table>
+<thead>
+<tr>
+<th></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Clonar repositorio del curso</td>
+</tr>
+
+<tr>
+<td>Instalación VirtualBox y Vagrant</td>
+</tr>
+
+<tr>
+<td>Arrancar el entorno virtual de prácticas</td>
+</tr>
+</tbody>
+</table>
+
+</section><section>
+
+<h2 id="segunda-parte-definición-de-iac-y-despliegue-con-aplicación">Segunda parte: Definición de IaC y despliegue con aplicación</h2>
+
+<table>
+<thead>
+<tr>
+<th></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Empaquetar nuestra aplicación en un Contenedor Docker</td>
+</tr>
+
+<tr>
+<td>Subir nuestro Contenedor a un repositorio</td>
+</tr>
+
+<tr>
+<td>Definir nuestra infraestructura en código en AWS</td>
+</tr>
+
+<tr>
+<td>Desplegar y validar la infraestructura definida</td>
+</tr>
+
+<tr>
+<td>Validación del escenario en producción</td>
+</tr>
+</tbody>
+</table>
+
+</section><section>
+
+<h2 id="tercera-parte-modificaciones-extras">Tercera parte: Modificaciones extras</h2>
+
+<table>
+<thead>
+<tr>
+<th></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Modifiquemos nuestra IaC</td>
+</tr>
+
+<tr>
+<td>¡Destruyamos la infraestructura!</td>
+</tr>
+</tbody>
+</table>
+
+</section><section>
+
+<h1 id="práctica-2-ci-cd-de-infraestructura-dinámica">Práctica 2: CI/CD de infraestructura dinámica</h1>
+
+</section><section>
+
+<h2 id="objetivo-1">Objetivo</h2>
+
+<p><img src="https://docs.google.com/drawings/d/1-rk-dMDChhNxcUKdNeGxTLaKcrCqSZdO48Vb_oSW-0o/pub?w=1080&amp;h=423" alt="" /></p>
+
+</section><section>
+
+<h2 id="materiales">Materiales</h2>
+
+<pre><code>|-- app
+|   |-- Dockerfile
+|   |-- app.py
+|   |-- app.pyc
+|   |-- requirements.txt
+|   `-- test_app.py
+|-- bitbucket-pipelines.yml
+|-- cloudformation
+|   |-- cfn_stack_update.py
+|   |-- requirements.txt
+|   `-- stack_asg.py
+`-- scripts
+    |-- bootstrap
+    |-- cf_stack.sh
+    |-- cibuild
+    |-- cleanup
+    |-- test_docker.sh
+    |-- test_unit.sh
+    `-- upload_docker_hub.sh
+</code></pre>
+
+</section><section>
+
+<h2 id="primera-parte-trabajando-con-nuestro-propio-repositorio">Primera parte: Trabajando con nuestro propio repositorio</h2>
+
+<table>
+<thead>
+<tr>
+<th></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Nuevo repositorio</td>
+</tr>
+
+<tr>
+<td>Creando e instalando un par de claves</td>
+</tr>
+
+<tr>
+<td>Inicializando el repositorio dentro de la máquina virtual</td>
+</tr>
+</tbody>
+</table>
+
+</section><section>
+
+<h2 id="segunda-parte-testing-en-local">Segunda parte: Testing en local</h2>
+
+<table>
+<thead>
+<tr>
+<th></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Unit Testing</td>
+</tr>
+
+<tr>
+<td>Functional Testing</td>
+</tr>
+
+<tr>
+<td>Mejorar los tests</td>
+</tr>
+</tbody>
+</table>
+
+</section><section>
+
+<h2 id="tercera-parte-integración-y-despliegue-continuo">Tercera parte: Integración y despliegue continuo</h2>
+
+<table>
+<thead>
+<tr>
+<th></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Creación de una Pipeline</td>
+</tr>
+
+<tr>
+<td>Definición de pasos y variables</td>
+</tr>
+
+<tr>
+<td>Ejecución de la Pipeline</td>
+</tr>
+
+<tr>
+<td>Validación de resultados</td>
+</tr>
+
+<tr>
+<td>Añadir nuevos pasos a la Pipeline</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+</section><section data-shortcode-section>
+<p><section data-noprocess data-shortcode-slide
+    data-background="#f7cbbf"
+    class="subtitle"
+    data-template="subtitle"></p>
+
+<h2 id="primera-parte-preparando-el-entorno">Primera parte: Preparando el entorno</h2>
+
+</section><section>
+
+<h2 id="descargando-las-fuentes">Descargando las fuentes</h2>
+
+<ul>
+<li>El primer paso será clonar/descargar el repositorio del curso desde <a href="https://bitbucket.org/dcaba/devops-training/">https://bitbucket.org/dcaba/devops-training/</a></li>
+</ul>
+
+<pre><code class="language-bash">git clone https://bitbucket.org/dcaba/devops-training.git
+</code></pre>
+
+<ul>
+<li>Para facilitar el desarrollo de la práctica utilizaremos un entorno virtual Linux con soporte para Python y Docker (usaremos el contenido del directorio lab1/vagrant)
+
+<ul>
+<li>Instrucciones detalladas más adelante</li>
+</ul></li>
+</ul>
+
+</section><section>
+
+<h2 id="materiales">Materiales</h2>
+
+<pre><code>|-- lab1
+|   |-- app
+|   |   |-- app.py
+|   |   |-- Dockerfile
+|   |   |-- requirements.txt
+|   |-- cloudformation
+|   |   |-- stack_asg.py
+|   |-- vagrant
+|   |   |-- Vagrantfile
+</code></pre>
+
+</section><section>
+
+<h2 id="instalación-entorno-de-virtualización-virtualbox">Instalación entorno de virtualización VirtualBox</h2>
+
+<blockquote>
+<p>Si disponías de instalaciones previas (desactualizadas / no operativas), probablemente debas limpiar tu sistema</p>
+</blockquote>
+
+<p>VirtualBox: <a href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a></p>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Virtualbox_logo.png" style="width:40%;"></p>
+
+</section><section>
+
+<h2 id="instalación-vagrant-para-provisionar-la-vm">Instalación Vagrant para provisionar la VM</h2>
+
+<blockquote>
+<p>Si dispones de una versión antigua de Vagrant, probablemente debas actualizarla para ir alineado con VirtualBox</p>
+</blockquote>
+
+<p>Vagrant: <a href="https://www.vagrantup.com/downloads.html">https://www.vagrantup.com/downloads.html</a></p>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Vagrant.png" style="width:30%;"></p>
+
+</section><section>
+
+<h2 id="notas-para-la-siguiente-sección">Notas para la siguiente sección</h2>
+
+<blockquote>
+<p>En caso de fallo inicializando Vagrant, asegúrate que el soporte de VT-x se encuentra habilitado en la BIOS.</p>
+
+<p>En entornos MS Windows, asegúrate que Windows Hyper-V está desactivado en &ldquo;Windows Features on or off&rdquo;</p>
+
+<p>Para evitar problemas con la importación de ficheros, puedes volver a clonar el repositorio dentro de la máquina Vagrant y no depender de los ficheros externos</p>
+</blockquote>
+
+</section><section>
+
+<h2 id="arranque-de-la-vm-con-vagrant">Arranque de la VM con Vagrant</h2>
+
+<p>Inicializar una máquina vacía, que descargará la imagen que después usaremos:</p>
+
+<pre><code class="language-bash">vagrant init williamyeh/ubuntu-trusty64-docker
+vagrant up; vagrant halt; vagrant destroy
+</code></pre>
+
+<p>En <strong>lab1/vagrant</strong>, donde tenemos definido el <strong>Vagrantfile</strong>, arrancaremos la máquina virtual esta vez con la configuración que esperamos:</p>
+
+<pre><code class="language-bash">$ cd lab1/vagrant
+
+$ vagrant up --provider virtualbox
+
+$ vagrant status
+</code></pre>
+
+</section><section>
+
+<h2 id="trabajando-en-la-vm">Trabajando en la VM</h2>
+
+<p>Accederemos a la máquina virtual creada, donde desarrollaremos la práctica:</p>
+
+<pre><code class="language-bash">$ vagrant ssh default
+</code></pre>
+
+<p>Y dentro de ésta, nos situaremos en el directorio de trabajo:</p>
+
+<pre><code class="language-bash">vagrant@devops-host ~ $ cd /vagrant/
+vagrant@devops-host /vagrant $ ls
+bitbucket-pipelines.yml  lab1  lab2  lab3  README.md  slides
+vagrant@devops-host /vagrant $ cd lab1
+vagrant@devops-host /vagrant/lab1 $
+</code></pre>
+
+</section>
+</section><section data-shortcode-section>
+<p><section data-noprocess data-shortcode-slide
+    data-background="#f7cbbf"
+    class="subtitle"
+    data-template="subtitle"></p>
+
+<h2 id="segunda-parte-definición-de-iac-y-despliegue-con-aplicación">Segunda parte: Definición de IaC y despliegue con aplicación</h2>
+
+</section><section>
+
+<h2 id="descripción-de-la-imagen-docker-con-la-aplicación">Descripción de la imagen Docker con la aplicación</h2>
+
+<p>Una vez tenemos el entorno preparado, conectados a la máquina con vagrant, el primer objetivo será crear una imagen Docker que contenga nuestra aplicación, tanto para desarrollo como producción.</p>
+
+<p>Dentro de <strong>app</strong> (en la VM gestionada por vagrant, paths relativos respecto a <strong>/vagrant/lab1</strong>), disponemos de un <strong>Dockerfile</strong> que describe los pasos necesarios para crear la imagen del contenedor:</p>
+
+<pre><code>$ cat Dockerfile
+FROM gliderlabs/alpine:3.6
+MAINTAINER DevOps Training BCN &quot;devops-training-bcn@googlegroups.com&quot;
+RUN apk add --no-cache python &amp;&amp; \
+    python -m ensurepip &amp;&amp; \
+    rm -r /usr/lib/python*/ensurepip &amp;&amp; \
+    pip install --upgrade pip setuptools &amp;&amp; \
+    rm -r /root/.cache
+COPY . /app
+WORKDIR /app
+RUN pip install -r requirements.txt
+ENTRYPOINT [&quot;python&quot;]
+CMD [&quot;app.py&quot;]
+</code></pre>
+
+<p><a href="https://github.com/wsargent/docker-cheat-sheet#dockerfile">Cheat Sheet Dockerfile</a></p>
+
+</section><section>
+
+<h2 id="nuestra-aplicación">¡Nuestra aplicación!</h2>
+
+<p>En nuestro caso, la aplicación es un simple servidor web desarrollado con el framework Flask sobre Python. Se puede ver en <strong>lab1/app/app.py</strong>:</p>
+
+<pre><code class="language-python">from flask import Flask
+app = Flask(__name__)
+
+@app.route(&quot;/&quot;)
+def index():
+    return &quot;Index!&quot;
+
+@app.route(&quot;/hello&quot;)
+def hello():
+    return &quot;Hello World!&quot;
+
+def main():
+    # listening in port 5000
+    app.run(threaded=True, debug=True, host='0.0.0.0')
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+</section><section>
+
+<h2 id="creación-una-imagen-de-docker-con-nuestra-aplicación">Creación una imagen de Docker con nuestra aplicación</h2>
+
+<p>Crearemos el container a partir del Dockerfile (podéis personalizarlo con vuestros datos). Siéntete libre de bautizar también a tu imagen ;)</p>
+
+<p>Este proceso tarda unos minutos pues debe descargar la imagen inicial definida en <strong>FROM</strong></p>
+
+<pre><code>$ docker build -t &lt;docker_image_name&gt;:&lt;tag&gt; .
+</code></pre>
+
+<p>Una vez creada la imagen del contenedor, podemos verla disponible en:</p>
+
+<pre><code>$ docker images
+REPOSITORY              TAG     IMAGE ID        CREATED         SIZE
+&lt;docker_image_name&gt;     &lt;tag&gt;   d1667d4db76a    2 minutes ago   400.3 MB
+</code></pre>
+
+</section><section>
+
+<h2 id="arrancamos-nuestra-aplicación-en-local">Arrancamos nuestra aplicación en local</h2>
+
+<p>A partir de la imagen creada, pasaremos a arrancarla en local para validar que el contenedor se ha creado correctamente y la aplicación funciona como deseamos:</p>
+
+<pre><code>$ docker run -d -p &lt;exposed_port&gt;:5000 &lt;docker_image_name&gt;:&lt;tag&gt;
+</code></pre>
+
+<p>El <em>exposed-port</em> nos permite mapear externamente un puerto diferente al que nuestra aplicación sirve por defecto (5000).</p>
+
+<p>Revisemos que el container está funcionando (puede haber otro en marcha según el entrono de trabajo):</p>
+
+<pre><code>$ docker ps
+CONTAINER ID        IMAGE                       COMMAND                  CREATED              STATUS              PORTS                    NAMES
+349b69cbe16b        &lt;docker_image_name&gt;:&lt;tag&gt;   &quot;python app.py&quot;          About a minute ago   Up About a minute   0.0.0.0:4444-&gt;5000/tcp   grave_kare
+</code></pre>
+
+<p>Notar que docker nos da un nombre e ID aleatorios, y que nos indica cuál es el COMMAND que esta ejecutando, <strong>python app.py</strong></p>
+
+</section><section>
+
+<h2 id="validación-del-funcionamiento-de-nuestra-aplicación-en-local">Validación del funcionamiento de nuestra aplicación en local</h2>
+
+<p>Ahora verifiquemos (manualmente) en local que la dupla aplicación/contenedor funciona:</p>
+
+<pre><code>$ curl localhost:&lt;exposed-port&gt;
+Index!
+$ curl localhost:&lt;exposed-port&gt;/hello
+Hello World!
+</code></pre>
+
+</section><section>
+
+<h2 id="publicación-de-nuestro-contenedor">Publicación de nuestro contenedor</h2>
+
+<p>El entorno de trabajo en local es útil para el desarrollo, pero para usar nuestra aplicación la debemos poder desplegar en producción.</p>
+
+<p>Para eso, utilizaremos Docker HUB como repositorio (¡Primero debemos crear una cuenta personal! No es necesario crear un repositorio desde el interfaz web):</p>
+
+<pre><code>$ docker login --username=&lt;yourhubusername&gt; --password=&lt;yourpassord&gt;
+</code></pre>
+
+<p>Crearemos un segundo nombre (tag) de la imagen, esta vez, alineada con la estructura de Docker Hub:</p>
+
+<pre><code>$ docker tag &lt;original_docker_image_new&gt;:&lt;original_tag&gt; &lt;yourhubusername&gt;/&lt;docker_image_name_new&gt;:&lt;tag_new&gt;
+</code></pre>
+
+<p>Subimos la imagen a Docker Hub (puede tardar un tiempo pues la imagen se sube a Internet):</p>
+
+<pre><code>$ docker push &lt;yourhubusername&gt;/&lt;docker_image_name_new&gt;:&lt;tag_new&gt;
+</code></pre>
+
+</section><section>
+
+<h2 id="preparación-del-entorno-de-producción">Preparación del entorno de Producción</h2>
+
+<p>En nuestro caso utilizaremos un entorno de infraestructura dinámica, Amazon Web Services</p>
+
+<p>Para comenzar deberemos disponer de una cuenta:
+<a href="https://portal.aws.amazon.com/gp/aws/developer/registration/index.html">https://portal.aws.amazon.com/gp/aws/developer/registration/index.html</a></p>
+
+</section><section>
+
+<h2 id="creación-del-stack-en-aws">Creación del stack en AWS</h2>
+
+<p>En AWS, una de las opciones para crear un entrono de infraestructura dinámica es usar el servico Cloudformation, que mediante unos datos en estructura JSON o YAML, permite crear múltiples recursos propios de AWS</p>
+
+<p>En nuestro caso, para crear esta template, que subiremos a AWS, usaremos un script en python ubicado en <strong>lab1/cloudformation/stack_asg.py</strong></p>
+
+<p><a href="https://bitbucket.org/dcaba/devops-training/src/d17b02b3b89db3bb716a79d5fd037988553c9888/lab1/cloudformation/stack_asg.py?at=master&amp;fileviewer=file-view-default">Lab 1 Cloudformation stack</a></p>
+
+<p>Si analizamos el script veremos que el stack crea múltiples recursos a partir de unos parámetros de entrada (por ejemplo, la imagen docker a utilizar), entre ellos un Autoscaling Group (ASG; una entidad que según unos parámetros irá añadiendo más o menos capacidad de computación) y un balanceador de carga asociado a este ASG</p>
+
+</section><section>
+
+<h2 id="preparación-del-entorno-python">Preparación del entorno Python</h2>
+
+<p>En esta práctica generaremos el fichero de Cloudformation desde código, usando python/troposphere. Por lo tanto, y dentro de la máquina virtual arrancada con vagrant:</p>
+
+<ul>
+<li><p>Instalaremos Python2 y su gestor de paquetes (pip):</p>
+
+<pre><code>$ sudo apt-get update
+$ sudo apt-get install python-pip
+</code></pre></li>
+
+<li><p>Instalaremos la librería necesaria para crear el template de CloudFormation, <strong>troposphere</strong> (ver imports en el código para confirmar las dependencias), mas actualizaremos una dependencia de ésta:</p>
+
+<pre><code>$ sudo pip install --upgrade setuptools
+$ sudo pip install troposphere
+</code></pre></li>
+</ul>
+
+</section><section>
+
+<h2 id="ejecución-el-script-de-creación">Ejecución el script de creación</h2>
+
+<p>La ejecución del script sólo crea la template, que deberemos guardar en un fichero JSON para usar en la consola de Cloudformation/AWS:</p>
+
+<pre><code>$ cd /vagrant/lab1/cloudformation/
+$ python stack_asg.py &gt; stack.json
+</code></pre>
+
+<p>Este fichero estará disponible en nuestro directorio del curso pues el directorio &ldquo;/vagrant&rdquo; está mapeado fuera de la máquina virtual en &ldquo;/devops-training&rdquo;:</p>
+
+<pre><code>config.vm.synced_folder &quot;../../&quot;, &quot;/vagrant&quot;, disabled: false
+</code></pre>
+
+</section><section>
+
+<p>En caso de problemas con la sincronización de directorios podemos acceder desde nuestra máquina, sacamos el fichero fuera del entorno Vagrant (se puede usar cualquier cliente sftp), bien usando una key de autenticación (sin password):</p>
+
+<pre><code>$ scp -P 2222 -i ~/.vagrant.d/insecure_private_key vagrant@127.0.0.1:/vagrant/lab1/cloudformation/stack.json .
+</code></pre>
+
+<p>O autenticación via password:</p>
+
+<pre><code>$ scp -P 2222 vagrant@127.0.0.1:/vagrant/lab1/cloudformation/stack.json .
+</code></pre>
+
+<p>El password por defecto en esta máquina de Vagrant es <strong>vagrant</strong></p>
+
+</section><section>
+
+<h2 id="entrando-a-la-consola-de-aws">Entrando a la consola de AWS</h2>
+
+<p>Aunque en los entornos habituales esta ejecución también se realiza vía código, en este caso utilizaremos la consola AWS. Atención a la esquina superior derecha, donde asignamos la región de trabajo para cada servicio AWS.</p>
+
+<p>Como requisito para arrancar máquinas en EC2, hemos de crear un par de llaves, que se configurarán en las máquinas de Amazon y nos permitirían un acceso directo a la consola de éstas. Usa la sección <strong>Key Pairs</strong> en EC2 (la clave privada se descarga automáticamente).</p>
+
+</section><section>
+
+<h2 id="aws-console">AWS Console</h2>
+
+<p><img src="../images/awsconsole.png" style="width:65%;"></p>
+
+</section><section>
+
+<h2 id="creación-y-ejecución-del-cloudformation">Creación y ejecución del Cloudformation</h2>
+
+<p>Ya con el par de claves disponible, dentro de la sección CloudFormation (upload template), subimos el fichero especificando:</p>
+
+<ul>
+<li><strong>docker-image</strong> (imagen docker que habéis subido a Docker Hub)</li>
+<li><strong>instance-type</strong> (dejar valor por defecto, pues no tiene coste)</li>
+<li><strong>keyname</strong> (deberemos haberla creada a priori)</li>
+<li><strong>webport</strong> (puerto que expondrá el contenedor, que puede ser también el 5000)</li>
+<li><strong>scale-capacity</strong> (número de instancias a desplegar)</li>
+</ul>
+
+<p>Podemos aceptar el resto de valores por defecto.
+Revisemos la herramienta de previsión de costes, y el coste del ejemplo, que nos propone Cloudformation (recordad filtrar por la región en la que estemos desplegando).
+A partir de este punto, Cloudformation empieza a desplegar todos los recursos necesarios para hacer funcionar el entorno de producción.</p>
+
+</section><section>
+
+<h2 id="validación-del-escenario-en-producción-i">Validación del escenario en producción (i)</h2>
+
+<ul>
+<li>Analicemos la información de nuestro stack creado por Cloudformation:
+
+<ul>
+<li>Events (deberemos poder seguir el proceso de despliegue del stack)</li>
+<li>Outputs</li>
+<li>Resources</li>
+<li>Parameters</li>
+</ul></li>
+<li>Validemos en el servicio EC2 que se han creado:
+
+<ul>
+<li>1 Autoscaling group (ASG)</li>
+<li>2 instancias EC2 debido a la política del ASG</li>
+<li>1 ELB ligado al ASG</li>
+</ul></li>
+</ul>
+
+</section><section>
+
+<h2 id="validación-del-escenario-en-producción-ii">Validación del escenario en producción (ii)</h2>
+
+<ul>
+<li>Dentro del ELB, podemos ver las instancias asociadas y si tiene el servicio &ldquo;InService&rdquo; (las máquinas tardan un par de minutos en arrancar). Esto ser valida según el Health Check definido. Y este ELB expone al exterior el puerto estándar 80.</li>
+<li>Accedamos a la url del ELB  puerto 80 para validar que funciona</li>
+<li>o a las instancias, en los puertos de servicio correspondientes</li>
+<li>Juguemos con el ASG, eliminando alguna instancia, para ver como ser recrean</li>
+<li>Validemos el ELB y su healthcheck</li>
+</ul>
+
+</section>
+</section><section data-shortcode-section>
+<p><section data-noprocess data-shortcode-slide
+    data-background="#f7cbbf"
+    class="subtitle"
+    data-template="subtitle"></p>
+
+<h2 id="tercera-parte-modificaciones-extras">Tercera Parte: Modificaciones extras</h2>
+
+</section><section>
+
+<h2 id="modifiquemos-nuestra-iac">Modifiquemos nuestra IaC</h2>
+
+<ul>
+<li>Cambiar el puerto del ELB del puerto <strong>80</strong> al puerto <strong>6789</strong></li>
+<li>Incrementar el número de servidores a 4</li>
+<li>Cambiar la aplicación para que acepte el path <strong>&rdquo;/devops&rdquo;</strong> y retorne el string <strong>&ldquo;16-02-2019&rdquo;</strong></li>
+<li>Añadir en la respuesta de la aplicación la IP privada de la máquina que responde</li>
+</ul>
+
+<p><img src="../images/keep-calm-and-do-it-yourself-13.png" style="width:30%;"></p>
+
+</section><section>
+
+<h2 id="redespleguemos">¡Redespleguemos!</h2>
+
+<p>Para cada cambio, recuerda reflejar los cambios en código, actualizar tu stack y ver como los cambios se despliegan automáticamente</p>
+
+<p><img src="https://davidjellison.files.wordpress.com/2013/10/deploy-button.jpg" style="width:30%;"></p>
+
+<p>Si no hay cambios en la infraestructura (por ejemplo, cambios en el container), CF no actualizará el Stack, en ese caso podemos simular el rollout mediante la terminación de instancias del Autoscaling Group.</p>
+
+</section><section>
+
+<h2 id="destruyamos-la-infraestructura">¡Destruyamos la infraestructura!</h2>
+
+<p>Destruye tu stack de Cloudformation, probablemente no lo quieres activo toda la semana: <em>Delete Stack</em></p>
+
+<p><img src="http://becomeatopweddingplannerblog.com/wp-content/uploads/2015/01/011215WeddingPlannersWasteMoneyV2.jpg" style="width:20%;"></p>
+
+</section>
+</section><section data-shortcode-section>
+<p><section data-noprocess data-shortcode-slide
+    data-background="#f7cbbf"
+    class="subtitle"
+    data-template="subtitle"></p>
+
+<h2 id="primera-parte-trabajando-con-nuestro-propio-repositorio">Primera parte: Trabajando con nuestro propio repositorio</h2>
+
+</section><section>
+
+<h2 id="nuevo-repositorio">Nuevo repositorio</h2>
+
+<ul>
+<li>Seguimos utilizando la misma máquina virtual del <strong>Lab1 (Vagrant)</strong></li>
+<li>Creamos un repositorio nuevo para crear una pipeline propia que utilizaremos en la segunda parte.
+
+<ul>
+<li>Primero, en la <strong>interfaz web de Bitbucket</strong> crearemos un repositorio y escogeremos la opción <em>I&rsquo;m starting from scratch</em> que nos mostrará los siguientes comandos (no ejecutar aún):</li>
+</ul></li>
+</ul>
+
+<pre><code class="language-bash">git clone git@bitbucket.org:&lt;bitbucket_user&gt;/&lt;repo_name&gt;.git
+cd &lt;repo_name&gt;
+echo &quot;# My project's README&quot; &gt;&gt; README.md
+git add README.md
+git commit -m &quot;Initial commit&quot;
+git push -u origin master
+</code></pre>
+
+</section><section>
+
+<h2 id="creando-e-instalando-un-par-de-claves">Creando e instalando un par de claves</h2>
+
+<ul>
+<li>Para proseguir, necesitaremos de nuestras <strong>credenciales en Bitbucket</strong>. Para eso, debemos <strong>crear una llave SSH en nuestro perfil de bitbucket</strong> (o reusar una).
+
+<ul>
+<li>Click on user avatar -&gt; View profile -&gt; Security -&gt; SSH keys</li>
+</ul></li>
+
+<li><p>Esta llave la copiaremos dentro de Vagrant, bien directamente en la copia compartida de los materiales del curso (visible en la VM bajo <code>/vagrant</code>), o usando un cliente scp:</p>
+
+<pre><code>scp -P 2222 -i ~/.vagrant.d/insecure_private_key &lt;nuestra_llave_ssh&gt; vagrant@127.0.0.1:/vagrant/
+</code></pre></li>
+</ul>
+
+<p>Y ya dentro de Vagrant otra vez, la <strong>activaremos</strong>:</p>
+
+<pre><code>eval `ssh-agent -s`
+ssh-add &lt;nuestra_llave_ssh&gt;
+</code></pre>
+
+</section><section>
+
+<h2 id="inicializando-el-repositorio-dentro-de-la-máquina-virtual">Inicializando el repositorio dentro de la máquina virtual</h2>
+
+<p>Una vez activa la llave ssh, ya podremos <strong>realizar los pasos propuestos por bitbucket para clonar (descargar) nuestro nuevo repositorio</strong>, fuera del directorio <code>/vagrant</code> (por ejemplo, en el home directory del usuario en la VM)</p>
+
+<p>Finalmente, y para inicializar el repositorio con los ficheros de la práctica 2, copiaremos éstos desde lab2/* al nuevo repositorio:</p>
+
+<pre><code class="language-bash">cp -r /vagrant/lab2/* .
+</code></pre>
+
+</section>
+</section><section data-shortcode-section>
+<p><section data-noprocess data-shortcode-slide
+    data-background="#f7cbbf"
+    class="subtitle"
+    data-template="subtitle"></p>
+
+<h2 id="segunda-parte-testing-en-local">Segunda Parte: Testing en local</h2>
+
+</section><section>
+
+<h2 id="unit-testing">Unit Testing</h2>
+
+<!--
+https://damyanon.net/flask-series-testing/
+-->
+
+<p>Primero actualizamos el sistema e instalemos el gestor de entornos de Python:</p>
+
+<pre><code class="language-bash">sudo apt-get update
+sudo apt-get install python-virtualenv
+</code></pre>
+
+<p>Analicemos y ejecutemos el fichero <code>scripts/test_unit.sh</code>:</p>
+
+<pre><code class="language-bash">#!/bin/bash
+set -ex
+
+virtualenv .venv
+. .venv/bin/activate
+pip install -r app/requirements.txt
+coverage run app/test_app.py
+coverage report app/app.py
+</code></pre>
+
+<p>En caso de errores como:</p>
+
+<pre><code class="language-bash">-bash: ./scripts/test_unit.sh: /bin/bash^M: bad interpreter: No such file or directory
+</code></pre>
+
+<p>Convertir saltos de líneas a formato Unix:</p>
+
+<pre><code class="language-bash">sudo apt-get install dos2unix; dos2unix scripts/*
+</code></pre>
+
+</section><section>
+
+<h2 id="functional-testing">Functional Testing</h2>
+
+<p>Analicemos y ejecutemos el fichero <code>scripts/test_docker.sh</code></p>
+
+<pre><code class="language-bash">#!/bin/bash
+
+set -ex
+
+docker build -t devops:test app/.
+
+cid=$(docker run -d -p 6789:5000 devops:test)
+
+until test=$(curl localhost:6789 | grep 'Index!') &amp;&gt; /dev/null
+do
+    sleep 0.1
+done
+
+# Clean Docker
+docker rm -fv &quot;$cid&quot; &amp;&gt; /dev/null
+
+if [[ &quot;$test&quot; == &quot;Index!&quot; ]]; then
+    echo &quot;Test Passes! Smile :)&quot;
+else
+    echo &quot;Test Fails, fix it!&quot;
+    exit 1
+fi
+</code></pre>
+
+</section><section>
+
+<h2 id="do-it-yourself">Do it yourself!</h2>
+
+<ul>
+<li>Modifiquemos el código y veamos como afecta a nuestro testing</li>
+<li>Ampliamos el test coverage al <strong>100%</strong></li>
+</ul>
+
+<p><img src="../images/keep-calm-and-do-it-yourself-13.png" style="width:30%;"></p>
+
+</section>
+</section><section data-shortcode-section>
+<p><section data-noprocess data-shortcode-slide
+    data-background="#f7cbbf"
+    class="subtitle"
+    data-template="subtitle"></p>
+
+<h2 id="tercera-parte-integración-y-despliegue-continuo">Tercera parte: Integración y despliegue continuo</h2>
+
+</section><section>
+
+<h2 id="continuous-deployment">Continuous Deployment</h2>
+
+<p>Paso a paso:</p>
+
+<ul>
+<li>Creamos una Pipeline en Bitbucket donde definimos los pasos</li>
+<li>Añadimos los test previos al despliegue</li>
+<li>Creamos el paquete de software (container) y lo subimos a un repositorio</li>
+<li>Creamos/actualizamos el despliegue de infraestructura que utilice esta nueva versión</li>
+</ul>
+
+<!--
+https://bitbucket.org/awslabs/aws-cloudformation-bitbucket-pipelines-python
+-->
+
+</section><section>
+
+<h2 id="creamos-una-pipeline-en-bitbucket">Creamos una Pipeline en BitBucket</h2>
+
+<!--
+https://docs.docker.com/docker-hub/bitbucket/
+-->
+
+<ul>
+<li>En la página web de BitBucket vamos a &ldquo;Pipelines&rdquo; y seleccionamos &ldquo;Enabled Pipelines&rdquo;</li>
+<li>En el template de la Pipeline pegamos el contenido de lab2/bitbucket-pipelines.yml y hacemos <strong>commit</strong></li>
+<li>Validemos que la Pipeline falla con &ldquo;No such file or directory!&rdquo; (no hemos commiteado nuestro repo local!)</li>
+</ul>
+
+<pre><code class="language-yaml">image: python:2.7
+
+# enable Docker for your repository
+options:
+  docker: true
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - pip
+        script: # Modify the commands below to build your repository.
+          - scripts/cibuild
+</code></pre>
+
+</section><section>
+
+<h2 id="qué-contiene-cibuild">¿Qué contiene CIBUILD?</h2>
+
+<pre><code class="language-bash">#!/bin/bash
+
+set -ex
+
+./scripts/bootstrap
+
+./scripts/test_unit.sh
+
+./scripts/test_docker.sh
+
+./scripts/upload_docker_hub.sh
+
+./scripts/cf_stack.sh
+
+./scripts/cleanup
+
+</code></pre>
+
+</section><section>
+
+<h2 id="creamos-las-variables-de-entorno-en-la-pipeline">Creamos las variables de entorno en la Pipeline</h2>
+
+<ul>
+<li>En <strong>Setting</strong> -&gt; <strong>Pipelines</strong> -&gt; <strong>Environment variables</strong> añadimos las siguientes variables:</li>
+</ul>
+
+<p><img src="../images/var_pipeline.png" style="width:60%;"></p>
+
+<ul>
+<li>Básicamente son las credenciales de Docker Hub y AWS (en la <strong>siguiente slide</strong>)</li>
+<li>Estas variables de entorno se usaran en los siguientes scripts.</li>
+</ul>
+
+</section><section>
+
+<h2 id="tenemos-las-credenciales-de-dockerhub-pero-no-de-aws">Tenemos las credenciales de DockerHub pero no de AWS&hellip;</h2>
+
+<ul>
+<li>Use your AWS account email address and password to sign in to the AWS Management Console.</li>
+<li>In the top right of the console, choose your account name or number. Then choose My Security Credentials.</li>
+<li>Choose Continue to Security Credentials.</li>
+<li>Expand the Access Keys (Access Key ID and Secret Access Key) section.</li>
+<li>Choose your desired action.</li>
+<li>To create an access key</li>
+</ul>
+
+</section><section>
+
+<h2 id="script-de-subida-del-contenedor">Script de subida del contenedor</h2>
+
+<p>En <code>lab2/scripts/upload_docker_hub.sh</code> tenemos un script para construir y subir nuestro contenedor a Docker Hub</p>
+
+<pre><code class="language-bash">#!/bin/bash
+
+set -ex
+
+docker build -t $BITBUCKET_REPO_SLUG:latest app/.
+
+docker login -u $DOCKERHUBUSER -p $DOCKERHUBPASS
+
+docker tag $BITBUCKET_REPO_SLUG $DOCKERHUBUSER/$BITBUCKET_REPO_SLUG:latest
+
+docker push $DOCKERHUBUSER/$BITBUCKET_REPO_SLUG:latest
+</code></pre>
+
+</section><section>
+
+<h2 id="script-de-creación-del-cloudformation">Script de creación del Cloudformation</h2>
+
+<p>En <code>lab2/scripts/cf_stack.sh</code> tenemos un script para crear el stack de Cloudformation.</p>
+
+<p>Este script utiliza tres variables de entorno que debemos añadir en la Pipeline:</p>
+
+<ul>
+<li>STACKNAME: Es el nombre que recibirá el stack deployado en AWS</li>
+<li>KEYNAME: Es el nombre de la llave que hemos creado en AWS-EC2</li>
+<li>WEBSERVERPORT: Es el puerto en el que el container está escuchando</li>
+</ul>
+
+<pre><code class="language-bash">#!/bin/bash
+
+set -ex
+
+pip install -r cloudformation/requirements.txt
+
+python cloudformation/stack_asg.py &gt; stack_asg.json
+
+cat stack_asg.json
+
+python cloudformation/cfn_stack_update.py --stack-name ${STACKNAME} --docker-image ${DOCKERHUBUSER}'/'${BITBUCKET_REPO_SLUG}':latest' --template 'stack_asg.json' --keyname ${KEYNAME} --webserverport ${WEBSERVERPORT}
+
+</code></pre>
+
+</section><section>
+
+<h2 id="subida-automática-del-cloudformation">Subida automática del Cloudformation</h2>
+
+<p>En <code>lab2/cloudformation/cfn_stack_update.py</code> tenemos un script que nos sube el Cloudformation automáticamente</p>
+
+<pre><code class="language-python">    client = boto3.client('cloudformation')
+
+    list_of_stacks = client.list_stacks()
+
+    create = True
+    for stack in list_of_stacks['StackSummaries']:
+        if args.stack_name in stack['StackId'] and stack['StackStatus'] != 'DELETE_COMPLETE':
+            create = False
+
+    log.info(create)
+    if create:
+        client.create_stack(
+            StackName=args.stack_name,
+            TemplateBody=open(args.template, 'r').read(),
+            Capabilities=[
+                'CAPABILITY_NAMED_IAM'
+            ],
+            Parameters=[
+                {
+                    'ParameterKey': 'DockerImage',
+                    'ParameterValue': args.docker_image,
+                },
+...
+</code></pre>
+
+</section><section>
+
+<h2 id="volvemos-a-ejecutar-la-pipeline">Volvemos a ejecutar la Pipeline&hellip;</h2>
+
+<p>Para hacerlo, podemos hacer otro commit en el repositorio con todos los datos en local</p>
+
+<pre><code class="language-bash">git add . 
+git commit -m &quot;message&quot;
+git push -f origin master
+</code></pre>
+
+</section><section>
+
+<h2 id="revisemos-la-ejecución-de-la-pipeline">Revisemos la ejecución de la Pipeline</h2>
+
+<p><img src="../images/exec_pipeline.png" style="width:30%;"></p>
+
+<p>&hellip;y verifiquemos nuestra infraestructura en AWS</p>
+
+</section><section>
+
+<h2 id="do-it-yourself">Do it yourself!</h2>
+
+<ul>
+<li>¿Realmente un cambio en el código se traduce en un nuevo deployment? ¿Podemos mejorarlo?</li>
+<li>¿Cómo podríamos introducir un entorno de PRE?</li>
+</ul>
+
+<p><img src="../images/keep-calm-and-do-it-yourself-13.png" style="width:30%;"></p>
+
+</section>
+</section>
+
+</div>
+      
+
+    </div>
+<script type="text/javascript" src=/devops-training/reveal-hugo/object-assign.js></script>
+
+<a href="/devops-training/reveal-js/css/print/" id="print-location" style="display: none;"></a>
+<script type="text/javascript">
+  var printLocationElement = document.getElementById('print-location');
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = printLocationElement.href + (window.location.search.match(/print-pdf/gi) ? 'pdf.css' : 'paper.css');
+  document.getElementsByTagName('head')[0].appendChild(link);
+</script>
+
+<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom.css","slide_number":true}</script>
+<script type="application/json" id="reveal-hugo-page-params">{"templates":{"subtitle":{"background":"#f7cbbf","class":"subtitle"},"title":{"background":"#4d163b","class":"title"}}}</script>
+
+<script src="/devops-training/reveal-js/lib/js/head.min.js"></script>
+<script src="/devops-training/reveal-js/js/reveal.js"></script>
+
+<script type="text/javascript">
+  
+  
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+  
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
+  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams));
+  Reveal.initialize(options);
+</script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/lib/js/classList.js"></script>
+
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/markdown/marked.js"></script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/markdown/markdown.js"></script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/highlight/highlight.js"></script>
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/zoom-js/zoom.js"></script>
+
+
+<script type="text/javascript" src="/devops-training/reveal-js/plugin/notes/notes.js"></script>
+
+
+
+<script type="text/javascript">
+if (hljs)
+  hljs.initHighlightingOnLoad();
+</script>
+    
+    
+  </body>
+</html>
