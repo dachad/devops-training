@@ -31,7 +31,8 @@
 
 ---
 
-![](https://whatsthebigdata.files.wordpress.com/2012/08/pc_phone_tablet_1975-20111.png)
+<img src="../images/devices_connected.png" style="width:100%;">
+
 
 ---
 
