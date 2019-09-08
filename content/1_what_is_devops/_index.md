@@ -13,10 +13,10 @@ background = "#f7cbbf"
 
 {{< slide template="title" background-image="images/Title.png" >}}
 
-# Qué es DevOps?
+# ¿Qué es DevOps?
 
 | |
 | --- |
 | Operaciones vs Desarrollo |
-| Porque es conveniente? |
+| ¿Porque es conveniente? |
 | DevOps vs SRE |

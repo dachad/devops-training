@@ -5,7 +5,13 @@
 
 {{< slide template="subtitle" >}}
 
-## Devops: La aproximación SWE es la vencedora
+## IT tradicional: Desarrollo vs Operaciones
+
+<img src="../images/dev_vs_ops.png" style="width:80%;">
+
+---
+
+## DevOps: finalmente SWE es la vencedora
 
 ![](https://pbs.twimg.com/media/B7ukz2YIMAEZ-if.jpg)
 
@@ -30,21 +36,16 @@ Propósito: **Operaciones como un componente más del desarrollo ágil de las ap
 * Cualquier aproximación heredada del mundo "bipolar", que asuma la existencia de "dos mundos" dentro de una corporación, o que introduzca operaciones "one time" (no importa que sea a través de la mejor de las herramientas Self-Service) deja de ser bienvenida 
 * La aproximación ya ha sido usada por líderes tecnológicos, con éxito
 
----
-
-## DevOps, rompiendo silos
-
-![](http://cdn.edureka.co/blog/wp-content/uploads/2014/12/Devops_03.png)
 
 ---
 
-## DevOps culture vs role
+## DevOps cultura vs role
 
-![](https://img.scoop.it/wYv5lL3VjySbSccKGHHBMDl72eJkfbmt4t8yenImKBVvK0kTmF0xjctABnaLJIm9)
+<img src="https://img.scoop.it/wYv5lL3VjySbSccKGHHBMDl72eJkfbmt4t8yenImKBVvK0kTmF0xjctABnaLJIm9" style="width:50%;">
 
 ---
 
-## DevOps culture vs role (2)
+## DevOps cultura vs role (2)
 
 
 <img src="https://imgs.xkcd.com/comics/tools.png" style="width:140%;">
