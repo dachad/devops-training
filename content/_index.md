@@ -14,3 +14,7 @@ background = "#f7cbbf"
 {{< slide template="title" background-image="images/Title.png" >}}
 
 # Devops training course
+
+---
+
+<tr><a href="1_what_is_devops">1 ¿Que es DevOps?</a></tr>

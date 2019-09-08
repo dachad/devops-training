@@ -19,11 +19,13 @@
 
 ---
 
-<img src="https://news.netcraft.com/wp-content/uploads/2011/03/wpid-site_count_history.png" style="width:140%;">
+<img src="../images/hostnames.jpg" style="width:100%;">
+
 
 ---
 
-<img src="https://www.infragistics.com/community/cfs-filesystemfile.ashx/__key/CommunityServer.Blogs.Components.WeblogFiles/mobileman/3463.data_2D00_growth_2D00_big_2D00_data.png" style="width:120%;">
+<img src="../images/data.png" style="width:100%;">
+
 
 ---
 

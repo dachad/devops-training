@@ -36,11 +36,6 @@ Propósito: **Operaciones como un componente más del desarrollo ágil de las ap
 * Cualquier aproximación heredada del mundo "bipolar", que asuma la existencia de "dos mundos" dentro de una corporación, o que introduzca operaciones "one time" (no importa que sea a través de la mejor de las herramientas Self-Service) deja de ser bienvenida 
 * La aproximación ya ha sido usada por líderes tecnológicos, con éxito
 
----
-
-## A que se parece un DevOps?
-
-<img src="../images/devops_role.png" style="width:80%;">
 
 ---
 
