@@ -17,5 +17,5 @@ background = "#f7cbbf"
 
 | |
 | --- |
-| Porque automatizar la gestión de configuración? |
+| ¿Porque automatizar la gestión de configuración? |
 | Herramientas disponibles |
